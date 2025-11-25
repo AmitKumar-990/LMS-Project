@@ -1,15 +1,5 @@
-import React from 'react'
-import {Route, Routes} from 'react-router-dom'
-import Home from './Pages/student/Home'
+import AppRouter from "./routes/approuter";
 
-const App = () => {
-  return (
-    <div>
-      <Routes>
-        <Route path='/' element={<Home />} />
-      </Routes>
-    </div>
-  )
+export default function App() {
+  return <AppRouter />;
 }
-
-export default App 
