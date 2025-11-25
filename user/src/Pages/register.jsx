@@ -2,20 +2,22 @@ import { useState } from "react";
 import { auth } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import RoleSelector from "../component/roleselector";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleRegister = async () => {
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      alert(`Account created as ${role}`);
-    } catch (err) {
-      alert(err.message);
-    }
-  };
+  try {
+    await createUserWithEmailAndPassword(auth, email, password);
+    navigate("/home");   // redirect
+  } catch (err) {
+    alert(err.message);
+  }
+};
 
   return (
     <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">

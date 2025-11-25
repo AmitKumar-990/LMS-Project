@@ -6,29 +6,32 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import RoleSelector from "../component/roleselector";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      alert(`Logged in as ${role}`);
-    } catch (err) {
-      alert(err.message);
-    }
-  };
+ const handleLogin = async () => {
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    navigate("/home");     // redirect
+  } catch (err) {
+    alert(err.message);
+  }
+};
 
   const handleGoogleLogin = async () => {
-    try {
-      await signInWithPopup(auth, googleProvider);
-      alert(`Google login as ${role}`);
-    } catch (err) {
-      alert(err.message);
-    }
-  };
+  try {
+    await signInWithPopup(auth, googleProvider);
+    navigate("/home");    // redirect
+  } catch (err) {
+    alert(err.message);
+  }
+};
+
 
   const handleForgot = async () => {
     if (!email) return alert("Enter email first!");
@@ -38,7 +41,6 @@ export default function Login() {
 
   return (
     <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
-      
       {/* LEFT SIDE IMAGE */}
       <div className="hidden md:flex bg-gray-100 items-center justify-center">
         <img
@@ -51,7 +53,6 @@ export default function Login() {
       {/* RIGHT SIDE FORM */}
       <div className="flex items-center justify-center px-10">
         <div className="w-full max-w-md">
-          
           <h1 className="text-3xl font-semibold text-gray-800 text-center">
             Get-Skillz Welcome You👋
           </h1>
@@ -83,7 +84,7 @@ export default function Login() {
                 onClick={handleForgot}
                 className="text-blue-600 text-sm mb-3 cursor-pointer hover:underline"
               >
-                Forgot Password?
+                <a href="/forgot-password">Forgot Password?</a>
               </p>
 
               <button
@@ -103,7 +104,10 @@ export default function Login() {
                 onClick={handleGoogleLogin}
                 className="w-full py-2 border rounded-xl flex items-center justify-center gap-3 hover:bg-gray-100"
               >
-                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" className="w-5" />
+                <img
+                  src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                  className="w-5"
+                />
                 Login with Google
               </button>
 
