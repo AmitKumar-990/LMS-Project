@@ -7,10 +7,10 @@ export default function Navbar() {
       </div>
 
       <div className="hidden md:flex gap-8 text-gray-600 font-medium">
-        <a href="/" className="hover:text-blue-600">Home</a>
+        <a href="/Home" className="hover:text-blue-600">Home</a>
         <a href="#courses" className="hover:text-blue-600">Courses</a>
         <a href="#instructors" className="hover:text-blue-600">Instructors</a>
-        <a href="#pricing" className="hover:text-blue-600">Pricing</a>
+        <a href="#mylearning" className="hover:text-blue-600">My Learning</a>
       </div>
 
       <a

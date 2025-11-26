@@ -13,7 +13,7 @@ export default function HeroSection() {
         </p>
 
         <button className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700 transition">
-          Explore Courses
+          <a href="/ExploreCourses" className="hover:text-blue-600">Explore Courses</a>
         </button>
       </div>
 
