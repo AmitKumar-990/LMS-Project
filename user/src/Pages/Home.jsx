@@ -1,7 +1,15 @@
+import Navbar from "../component/Navbar";
+import HeroSection from "../component/HeroSection";
+import Features from "../component/Features";
+import Footer from "../component/Footer";
+
 export default function Home() {
   return (
-    <div className="h-screen flex items-center justify-center text-3xl font-semibold">
-      Welcome to LMS Home Page 🎓
-    </div>
+    <>
+      <Navbar />
+      <HeroSection />
+      <Features />
+      <Footer />
+    </>
   );
 }
