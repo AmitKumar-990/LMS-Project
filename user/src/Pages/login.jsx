@@ -1,114 +1,86 @@
 import { useState } from "react";
-import { auth, googleProvider } from "../firebase";
-import {
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-  signInWithPopup,
-} from "firebase/auth";
-import RoleSelector from "../component/roleselector";
+import { loginUser } from "../api/authAPI";
 import { useNavigate } from "react-router-dom";
+import RoleSelector from "../component/roleselector";
 
 export default function Login() {
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
 
- const handleLogin = async () => {
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    navigate("/home");     // redirect
-  } catch (err) {
-    alert(err.message);
-  }
-};
+  const handleLogin = async () => {
+    try {
+      const { data } = await loginUser({ email, password });
 
-  const handleGoogleLogin = async () => {
-  try {
-    await signInWithPopup(auth, googleProvider);
-    navigate("/home");    // redirect
-  } catch (err) {
-    alert(err.message);
-  }
-};
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
-
-  const handleForgot = async () => {
-    if (!email) return alert("Enter email first!");
-    await sendPasswordResetEmail(auth, email);
-    alert("Reset email sent");
+      navigate("/home");
+    } catch (err) {
+      alert(err.response?.data?.message || "Login failed");
+    }
   };
 
   return (
     <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
-      {/* LEFT SIDE IMAGE */}
+
+      {/* LEFT IMAGE */}
       <div className="hidden md:flex bg-gray-100 items-center justify-center">
-        <img
-          src="/src/assets/1.png"
-          className="w-4/5 rounded-3xl shadow-xl"
-          alt="Edu"
-        />
+        <img src="/src/assets/1.png" className="w-4/5 rounded-3xl" alt="" />
       </div>
 
-      {/* RIGHT SIDE FORM */}
+      {/* RIGHT FORM */}
       <div className="flex items-center justify-center px-10">
         <div className="w-full max-w-md">
+
           <h1 className="text-3xl font-semibold text-gray-800 text-center">
-            Get-Skillz Welcome You👋
+            Welcome Back 👋
           </h1>
-          <p className="text-gray-500 text-center mt-1 mb-6">
-            Login to your Get-Skillz account
-          </p>
 
           {!role ? (
             <RoleSelector setRole={setRole} />
           ) : (
             <>
-              <label className="text-gray-700 text-sm">Email</label>
               <input
                 type="email"
-                className="w-full mt-1 mb-4 px-4 py-2 border rounded-xl focus:ring focus:ring-blue-200"
-                placeholder="Enter Email"
+                placeholder="Email"
+                className="w-full mt-4 px-4 py-2 border rounded-lg"
                 onChange={(e) => setEmail(e.target.value)}
               />
 
-              <label className="text-gray-700 text-sm">Password</label>
               <input
                 type="password"
-                className="w-full mt-1 mb-4 px-4 py-2 border rounded-xl focus:ring focus:ring-blue-200"
-                placeholder="Enter Password"
+                placeholder="Password"
+                className="w-full mt-4 px-4 py-2 border rounded-lg"
                 onChange={(e) => setPassword(e.target.value)}
               />
 
-              <p
-                onClick={handleForgot}
-                className="text-blue-600 text-sm mb-3 cursor-pointer hover:underline"
-              >
-                <a href="/forgot-password">Forgot Password?</a>
-              </p>
-
               <button
                 onClick={handleLogin}
-                className="w-full py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition"
+                className="w-full mt-4 py-2 bg-blue-600 text-white rounded-lg"
               >
                 Login
               </button>
 
-              <div className="flex items-center my-4">
-                <div className="h-px bg-gray-300 w-full"></div>
-                <span className="px-3 text-gray-500">OR</span>
-                <div className="h-px bg-gray-300 w-full"></div>
-              </div>
+              {/* FORGOT PASSWORD */}
+              <p className="text-center mt-3 text-blue-600 cursor-pointer">
+                <a href="/forgot-password">Forgot Password?</a>
+              </p>
 
+              {/* GOOGLE SIGN-IN BUTTON */}
               <button
-                onClick={handleGoogleLogin}
-                className="w-full py-2 border rounded-xl flex items-center justify-center gap-3 hover:bg-gray-100"
+                onClick={() =>
+                  (window.location.href = "http://localhost:5000/api/google")
+                }
+                className="w-full mt-4 py-2 flex items-center justify-center gap-3 border rounded-lg hover:bg-gray-100 transition"
               >
                 <img
                   src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
                   className="w-5"
                 />
-                Login with Google
+                Continue with Google
               </button>
 
               <p className="text-center text-sm mt-5 text-gray-600">

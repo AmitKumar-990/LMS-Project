@@ -9,7 +9,7 @@ export default function Navbar() {
       <div className="hidden md:flex gap-8 text-gray-600 font-medium">
         <a href="/Home" className="hover:text-blue-600">Home</a>
         <a href="#courses" className="hover:text-blue-600">Courses</a>
-        <a href="#instructors" className="hover:text-blue-600">Instructors</a>
+        <a href="#instructors" className="hover:text-blue-600">I</a>
         <a href="#mylearning" className="hover:text-blue-600">My Learning</a>
       </div>
 
@@ -17,7 +17,7 @@ export default function Navbar() {
         href="/register"
         className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
       >
-        Sign Up
+        SignOut
       </a>
     </nav>
   );
