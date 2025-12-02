@@ -1,7 +1,7 @@
 import express from "express";
-import { createContent, uploadVideo, uploadThumbnail, deleteContent } from "../controllers/contentController.js";
+import { createContent, uploadVideo, uploadThumbnail, deleteContent } from "../controll/contentController.js";
 import upload from "../utils/multerConfig.js";
-import { authMiddleware } from "../middleware/authMiddleware.js";
+import { authMiddleware } from "../middleware/auth.js";
 
 const router = express.Router();
 

@@ -11,17 +11,27 @@ export default function Login() {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    try {
-      const { data } = await loginUser({ email, password });
+  try {
+    const { data } = await loginUser({ email, password });
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
+    // ✅ Save essential user info
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+    localStorage.setItem("role", data.user.role);
+    localStorage.setItem("userId", data.user._id); // <-- IMPORTANT FIX
 
-      navigate("/home");
-    } catch (err) {
-      alert(err.response?.data?.message || "Login failed");
+    // Redirect based on role
+    if (data.user.role === "instructor") {
+      navigate("/instructor/dashboard");
+    } else {
+      navigate("/");
     }
-  };
+  } catch (err) {
+    alert(err.response?.data?.message || "Login failed");
+  }
+};
+
+
 
   return (
     <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">

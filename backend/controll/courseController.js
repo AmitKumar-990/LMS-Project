@@ -18,15 +18,45 @@ export const createCourse = async(req, res) => {
     }
 };
 
-// Get instructor courses
+
 export const getMyCourses = async(req, res) => {
     try {
-        const courses = await Course.find({ instructor: req.user.id }).populate("chapters");
+        const courses = await Course.find({ instructor: req.user.id })
+            .populate("chapters");
         res.json(courses);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
+
+// Get courses by instructorId (public for instructor dashboard)
+export const getCoursesByInstructor = async(req, res) => {
+    try {
+        const instructorId = req.params.instructorId;
+
+        const courses = await Course.find({ instructor: instructorId });
+
+        res.json({ success: true, courses });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+};
+
+export const getCourseById = async(req, res) => {
+    try {
+        const course = await Course.findById(req.params.id).populate({
+            path: "chapters",
+            populate: { path: "contents" },
+        });
+
+        if (!course) return res.status(404).json({ message: "Course not found" });
+
+        res.json(course);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
 
 // Update course
 export const updateCourse = async(req, res) => {
@@ -35,11 +65,12 @@ export const updateCourse = async(req, res) => {
         if (!course) return res.status(404).json({ message: "Course not found" });
         if (course.instructor.toString() !== req.user.id) return res.status(403).json({ message: "Forbidden" });
 
-        const fields = ["title", "description", "category", "price", "thumbnailUrl"];
+        const fields = ["title", "description", "category", "price", "thumbnailUrl", "chapters"];
         fields.forEach(f => { if (req.body[f] !== undefined) course[f] = req.body[f]; });
 
         await course.save();
-        res.json(course);
+        const populated = await Course.findById(course._id).populate('chapters');
+        res.json(populated);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -50,7 +81,8 @@ export const deleteCourse = async(req, res) => {
     try {
         const course = await Course.findById(req.params.id);
         if (!course) return res.status(404).json({ message: "Course not found" });
-        if (course.instructor.toString() !== req.user.id) return res.status(403).json({ message: "Forbidden" });
+        if (course.instructor.toString() !== req.user.id)
+            return res.status(403).json({ message: "Forbidden" });
 
         await course.remove();
         res.json({ message: "Course deleted" });

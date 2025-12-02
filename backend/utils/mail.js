@@ -12,7 +12,7 @@ const sendEmail = async(email, subject, message) => {
     });
 
     await transporter.sendMail({
-        from: `"LMS Support" <${process.env.EMAIL_USER}>`,
+        from: `"GetSkillz Support" <${process.env.EMAIL_USER}>`,
         to: email,
         subject,
         html: message,

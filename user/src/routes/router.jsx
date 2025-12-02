@@ -4,7 +4,7 @@ import Register from "../Pages/register";
 import ForgotPassword from "../Pages/ForgotPassword";
 import Home from "../Pages/Home";
 import ExploreCourses from "../Pages/ExploreCourses";
-import ResetPassword from "../pages/ResetPassword";
+import ResetPassword from "../Pages/ResetPassword";
 import GoogleSuccess from "../Pages/googlesuccess";
 
 export default function AppRouter() {
@@ -17,7 +17,7 @@ export default function AppRouter() {
         <Route path="/home" element={<Home />} />
         <Route path="/explorecourses" element={<ExploreCourses />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
-        <Route path="/google-success" element={<GoogleSuccess />} />
+        <Route path="/googlesuccess" element={<GoogleSuccess />} />
       </Routes>
     </BrowserRouter>
   );

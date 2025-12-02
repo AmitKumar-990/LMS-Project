@@ -1,6 +1,6 @@
 import express from "express";
-import { createChapter, updateChapter, deleteChapter } from "../controllers/chapterController.js";
-import { authMiddleware } from "../middleware/authMiddleware.js";
+import { createChapter, updateChapter, deleteChapter } from "../controll/chapterController.js";
+import { authMiddleware } from "../middleware/auth.js";
 
 const router = express.Router();
 
