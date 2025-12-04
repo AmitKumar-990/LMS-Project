@@ -8,16 +8,10 @@ export default function CourseCard({ course }) {
       onClick={() => navigate(`/course/${course.id}`)}
       className="bg-white rounded-xl shadow hover:shadow-xl transition cursor-pointer border border-gray-100 h-[350px] flex flex-col"
     >
-      {/* FIXED HEIGHT IMAGE */}
       <div className="h-[160px] w-full overflow-hidden rounded-t-xl">
-        <img
-          src={course.img}
-          alt=""
-          className="h-full w-full object-cover"
-        />
+        <img src={course.img} alt="" className="h-full w-full object-cover" />
       </div>
 
-      {/* CONTENT */}
       <div className="p-4 flex flex-col justify-between flex-grow">
         <div>
           <h3 className="text-lg font-semibold text-gray-800 leading-tight">

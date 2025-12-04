@@ -36,7 +36,6 @@ export default function CourseCardInstructor({ course, reload }) {
           Edit
         </button>
 
-        {/* CHAPTERS BUTTON → Opens Editor with Chapters Tab */}
         <button
           onClick={() => navigate(`/instructor/course-editor/${course._id}?tab=Chapters`)}
           className="px-4 py-1 bg-green-600 text-white rounded"
@@ -44,7 +43,6 @@ export default function CourseCardInstructor({ course, reload }) {
           Chapters
         </button>
 
-        {/* DELETE BUTTON */}
         <button
           onClick={handleDelete}
           className="px-4 py-1 bg-red-600 text-white rounded"

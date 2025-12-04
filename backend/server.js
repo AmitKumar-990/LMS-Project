@@ -11,6 +11,10 @@ import './config/googleConfig.js';
 import courseRoutes from "./routes/courseRoutes.js";
 import chapterRoutes from "./routes/chapterRoutes.js";
 import contentRoutes from "./routes/contentRoutes.js";
+import analyticsRoutes from "./routes/analyticsRoutes.js";
+import paymentRoutes from "./routes/paymentRoute.js";
+import enrollmentRoutes from "./routes/enrollmentRoutes.js";
+
 
 connectDB();
 
@@ -25,10 +29,12 @@ app.use(passport.initialize());
 app.use('/api/auth', authRoutes);
 app.use('/api', googleRoutes);
 
-// 28/11/2025
 app.use("/api/course", courseRoutes);
 app.use("/api/chapter", chapterRoutes);
 app.use("/api/content", contentRoutes);
+app.use("/api/analytics", analyticsRoutes);
+app.use("/api/payments", paymentRoutes);
+app.use("/api/enrollments", enrollmentRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log('Server running on port', PORT));

@@ -11,10 +11,8 @@ export default function MyCourses() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        // Get instructor ID from login info
         const instructorId = localStorage.getItem("userId");
 
-        // Fetch instructor-specific courses from backend
         const res = await axios.get(
           `http://localhost:5000/api/course/instructor/${instructorId}`
         );

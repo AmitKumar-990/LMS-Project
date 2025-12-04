@@ -17,7 +17,7 @@ export default function ThumbnailUploader({ onUpload }) {
     setLoading(true);
     try {
       const { data } = await uploadThumbnail(formData);
-      onUpload(data.url); // return thumbnail URL to parent component
+      onUpload(data.url); 
     } catch (err) {
       console.error("Thumbnail upload error:", err);
       alert("Thumbnail upload failed");

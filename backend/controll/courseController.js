@@ -29,7 +29,17 @@ export const getMyCourses = async(req, res) => {
     }
 };
 
-// Get courses by instructorId (public for instructor dashboard)
+export const getAllCourses = async(req, res) => {
+    try {
+        const courses = await Course.find()
+            .populate("instructor", "name email");
+
+        res.json(courses);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
 export const getCoursesByInstructor = async(req, res) => {
     try {
         const instructorId = req.params.instructorId;
@@ -57,8 +67,6 @@ export const getCourseById = async(req, res) => {
     }
 };
 
-
-// Update course
 export const updateCourse = async(req, res) => {
     try {
         const course = await Course.findById(req.params.id);
@@ -76,17 +84,18 @@ export const updateCourse = async(req, res) => {
     }
 };
 
-// Delete course (and optionally cascade delete chapters/contents)
 export const deleteCourse = async(req, res) => {
     try {
-        const course = await Course.findById(req.params.id);
-        if (!course) return res.status(404).json({ message: "Course not found" });
-        if (course.instructor.toString() !== req.user.id)
-            return res.status(403).json({ message: "Forbidden" });
+        const { id } = req.params;
 
-        await course.remove();
-        res.json({ message: "Course deleted" });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+        const course = await Course.findById(id);
+        if (!course) return res.status(404).json({ message: "Course not found" });
+
+        await course.deleteOne(); // ← FIXED
+
+        res.json({ message: "Course deleted successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server error" });
     }
 };
