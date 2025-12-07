@@ -1,33 +1,45 @@
 import { useState } from "react";
+import Swal from "sweetalert2";
 import { uploadThumbnail } from "../api/uploadAPI";
 
 export default function ThumbnailUploader({ onUpload }) {
   const [preview, setPreview] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   const handleThumbnail = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
     setPreview(URL.createObjectURL(file));
+    setProgress(10);
 
     const formData = new FormData();
     formData.append("file", file);
 
-    setLoading(true);
     try {
+      let fakeProgress = 10;
+      const interval = setInterval(() => {
+        fakeProgress += 10;
+        if (fakeProgress >= 90) clearInterval(interval);
+        setProgress(fakeProgress);
+      }, 200);
+
       const { data } = await uploadThumbnail(formData);
-      onUpload(data.url); 
+
+      setProgress(100);
+      setTimeout(() => setProgress(0), 700);
+
+      onUpload(data.url);
     } catch (err) {
       console.error("Thumbnail upload error:", err);
-      alert("Thumbnail upload failed");
+      Swal.fire("Thumbnail upload failed");
     }
-    setLoading(false);
   };
 
   return (
     <div>
       <label className="font-medium">Course Thumbnail</label>
+
       <input
         type="file"
         accept="image/*"
@@ -35,8 +47,22 @@ export default function ThumbnailUploader({ onUpload }) {
         onChange={handleThumbnail}
       />
 
-      {loading && <p className="text-blue-600 mt-2">Uploading...</p>}
+      {/* Progress Bar */}
+      {progress > 0 && progress < 100 && (
+        <div className="mt-3 w-full">
+          <div className="w-full bg-gray-200 h-3 rounded">
+            <div
+              className="h-3 bg-blue-600 rounded"
+              style={{ width: `${progress}%`, transition: "width 0.2s" }}
+            ></div>
+          </div>
+          <p className="text-sm text-gray-700 mt-1">
+            Uploaded: {progress}% | Remaining: {100 - progress}%
+          </p>
+        </div>
+      )}
 
+      {/* Preview */}
       {preview && (
         <img
           src={preview}

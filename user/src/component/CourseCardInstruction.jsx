@@ -1,21 +1,44 @@
 import { useNavigate } from "react-router-dom";
+
+import Swal from "sweetalert2";
+
 import { deleteCourse } from "../api/courseAPI";
 
 export default function CourseCardInstructor({ course, reload }) {
   const navigate = useNavigate();
 
   // Handle Delete
-  const handleDelete = async () => {
-    if (!confirm("Are you sure you want to delete this course permanently?")) return;
+  
+const handleDelete = async () => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "This course will be permanently deleted!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Yes, delete it",
+    cancelButtonText: "Cancel"
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        await deleteCourse(course._id);
 
-    try {
-      await deleteCourse(course._id);
-      alert("Course deleted");
-      reload(); // Refresh My Courses list
-    } catch (err) {
-      alert(err.response?.data?.message || "Delete failed");
+        Swal.fire({
+          title: "Deleted!",
+          text: "Course has been removed successfully.",
+          icon: "success"
+        });
+
+        reload(); // Refresh list
+      } catch (err) {
+        Swal.fire({
+          title: "Error",
+          text: err.response?.data?.message || "Delete failed",
+          icon: "error"
+        });
+      }
     }
-  };
+  });
+};
 
   return (
     <div className="border rounded-lg shadow p-4 w-80 bg-white">
@@ -36,12 +59,12 @@ export default function CourseCardInstructor({ course, reload }) {
           Edit
         </button>
 
-        <button
+        {/* <button
           onClick={() => navigate(`/instructor/course-editor/${course._id}?tab=Chapters`)}
           className="px-4 py-1 bg-green-600 text-white rounded"
         >
           Chapters
-        </button>
+        </button> */}
 
         <button
           onClick={handleDelete}

@@ -1,17 +1,36 @@
 const features = [
   {
     title: "Expert-Led Courses",
-    icon: "/src/assets/icon-lightbulb.png",
+    // description: "Learn directly from professionals with real-world experience.",
+    // icon: "/src/assets/icon-lightbulb.png",
   },
   {
     title: "Flexible Learning",
-    icon: "/src/assets/icon-shield.png",
+    // description: "Study anytime, anywhere, at your own pace.",
+    // icon: "/src/assets/icon-shield.png",
   },
   {
     title: "Global Community",
-    icon: "/src/assets/icon-globe.png",
+    // description: "Connect and grow with learners from around the world.",
+    // icon: "/src/assets/icon-globe.png",
+  },
+  {
+    title: "Certified Course Completion",
+    // description: "Receive industry-recognized certificates after completion.",
+    // icon: "/src/assets/icon-globe.png",
+  },
+  {
+    title: "High-Quality Course Content",
+    // description: "Access well-structured and regularly updated learning material.",
+    // icon: "/src/assets/icon-globe.png",
+  },
+  {
+    title: "Trusted by Thousands of Learners",
+    // description: "Join a platform trusted and recommended by countless students.",
+    // icon: "/src/assets/icon-globe.png",
   },
 ];
+
 
 export default function Features() {
   return (

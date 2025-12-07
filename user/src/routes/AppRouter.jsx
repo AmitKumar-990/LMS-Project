@@ -22,7 +22,6 @@ import InstructorRoute from "./InstructorRoute";
 export default function AppRouter() {
   return (
     <Routes>
-      {/* PUBLIC ROUTES */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/home" element={<Home />} />
@@ -34,7 +33,6 @@ export default function AppRouter() {
       <Route path="/buy/:courseId" element={<BuyCourse />} />
       <Route path="/my-courses" element={<MyEnrollments />} />
 
-      {/* HOME */}
       <Route
         path="/"
         element={
@@ -53,7 +51,6 @@ export default function AppRouter() {
         }
       />
 
-      {/* INSTRUCTOR ROUTES */}
       <Route
         path="/instructor/dashboard"
         element={

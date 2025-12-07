@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import Swal from "sweetalert2";
 import { resetPassword } from "../api/authAPI";
 import { useParams, useNavigate } from "react-router-dom";
 import PasswordStrengthBar from "../component/PasswordStrengthBar";
@@ -36,7 +37,7 @@ export default function ResetPassword() {
 
   const handleSubmit = async () => {
     if (password !== confPassword) {
-      alert("Passwords do not match!");
+      Swal.fire("Passwords do not match!");
       return;
     }
 
@@ -47,7 +48,7 @@ export default function ResetPassword() {
       setSuccessMsg("Password reset successful! Redirecting...");
       setTimeout(() => navigate("/"), 3000);
     } catch (err) {
-      alert(err.response?.data?.message || "Something went wrong");
+      Swal.fire(err.response?.data?.message || "Something went wrong");
     }
 
     setLoading(false);
@@ -68,7 +69,6 @@ export default function ResetPassword() {
         </h2>
 
         <div className="mt-6">
-          {/* New Password */}
           <div className="relative">
             <input
               type={showPass ? "text" : "password"}
@@ -89,7 +89,6 @@ export default function ResetPassword() {
 
           <ValidationList validations={validations} />
 
-          {/* Confirm Password */}
           <div className="relative mt-6">
             <input
               type={showConfPass ? "text" : "password"}

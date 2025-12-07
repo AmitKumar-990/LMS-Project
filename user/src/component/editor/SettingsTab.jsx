@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { deleteCourse } from "../../api/courseAPI";
 import { useNavigate } from "react-router-dom";
 
@@ -5,15 +6,35 @@ export default function SettingsTab({ course }) {
   const navigate = useNavigate();
 
   const handleDelete = async () => {
-    if (!confirm("This will permanently delete the course (and chapters). Are you sure?")) return;
-    try {
-      await deleteCourse(course._id);
-      alert("Course deleted");
-      navigate("/instructor/my-courses");
-    } catch (err) {
-      alert(err.response?.data?.message || "Delete failed");
+  Swal.fire({
+    title: "Are you sure?",
+    text: "This will permanently delete the course and all its chapters.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Yes, delete it",
+    cancelButtonText: "Cancel",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        await deleteCourse(course._id);
+
+        Swal.fire({
+          title: "Deleted!",
+          text: "The course has been permanently removed.",
+          icon: "success",
+        });
+
+        navigate("/instructor/my-courses");
+      } catch (err) {
+        Swal.fire({
+          title: "Error",
+          text: err.response?.data?.message || "Delete failed",
+          icon: "error",
+        });
+      }
     }
-  };
+  });
+};
 
   return (
     <div className="bg-white p-6 rounded shadow">

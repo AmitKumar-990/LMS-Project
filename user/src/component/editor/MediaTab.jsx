@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Swal from "sweetalert2";
 import ThumbnailUploader from "../ThumbnailUploader";
 import { uploadVideoFile } from "../../api/uploadAPI";
 import { updateCourse } from "../../api/courseAPI";
@@ -9,16 +10,14 @@ export default function MediaTab({ course, refresh }) {
   const [thumbnailUrl, setThumbnailUrl] = useState(course.thumbnailUrl || "");
 
   const handlePromUpload = async () => {
-    if (!promoFile) return alert("Choose a promo video");
+    if (!promoFile) return Swal.fire("Choose a promo video");
     setUploading(true);
     try {
       const form = new FormData();
       form.append("file", promoFile);
       const res = await uploadVideoFile(form);
-      // res.data.url is cloudinary url
-      // we can save promo url inside course model (optionally add field promoUrl)
       await updateCourse(course._id, { promoUrl: res.data.url });
-      alert("Promo uploaded and linked to course");
+      Swal.fire("Promo uploaded and linked to course");
       await refresh();
     } catch (err) {
       console.error(err);
@@ -33,14 +32,14 @@ export default function MediaTab({ course, refresh }) {
       await updateCourse(course._id, { thumbnailUrl: url });
       await refresh();
     } catch {
-      alert("Failed to update thumbnail on server");
+      Swal.fire("Failed to update thumbnail on server");
     }
   };
 
   return (
     <div className="bg-white p-6 rounded shadow">
       <div>
-        <h3 className="font-semibold">Course Thumbnail</h3>
+        {/* <h3 className="font-semibold">Course Thumbnail</h3> */}
         <ThumbnailUploader onUpload={handleThumbnail} />
         {thumbnailUrl && (
           <img
@@ -52,7 +51,7 @@ export default function MediaTab({ course, refresh }) {
       </div>
 
       <div className="mt-6">
-        <h3 className="font-semibold">Promo Video</h3>
+        <h3 className="font-semibold">Content video</h3>
         <input
           type="file"
           accept="video/*"

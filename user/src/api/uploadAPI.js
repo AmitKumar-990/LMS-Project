@@ -1,23 +1,25 @@
 import axios from "axios";
 
+axios.defaults.adapter = "xhr";
+
 const API = axios.create({
     baseURL: "http://localhost:5000/api/content",
 });
 
-// Upload course thumbnail (image)
-export const uploadThumbnail = (formData) =>
+export const uploadThumbnail = (formData, onUploadProgress) =>
     API.post("/upload-thumbnail", formData, {
         headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "multipart/form-data",
         },
+        onUploadProgress,
     });
 
-// Upload lecture video
-export const uploadVideoFile = (formData) =>
+export const uploadVideoFile = (formData, onUploadProgress) =>
     API.post("/upload-video", formData, {
         headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "multipart/form-data",
         },
+        onUploadProgress,
     });

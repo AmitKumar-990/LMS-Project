@@ -1,5 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
+
+import Swal from "sweetalert2";
+
 import InstructorSidebar from "../../component/InstructorSidebar";
 import InstructorTopbar from "../../component/InstructorTopbar";
 import OverviewTab from "../../component/editor/OverviewTab";
@@ -22,7 +25,7 @@ export default function CourseEditor() {
       const { data } = await apiGetCourse(id);
       setCourse(data);
     } catch (err) {
-      alert(err.response?.data?.message || "Failed to load course");
+      Swal.fire(err.response?.data?.message || "Failed to load course");
     }
     setLoading(false);
   }, [id]);

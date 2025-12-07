@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 import { getCourseById } from "../api/courseAPI";
 import { createPaymentIntent, confirmPayment } from "../api/paymentAPI";
@@ -15,9 +16,7 @@ import {
 // import CheckoutForm from "../component/Payment/CheckoutForm";
 
 const stripePromise = loadStripe(
-  import.meta.env.VITE_STRIPE_PUB_KEY ||
-    "pk_test_51SQM9ICuvssCQYItyTBvt1efqewEyMN9jcBptYC1sFeyrwxE71V95sS69t8Buicg77THTa0DJgIdl1QhOBNpgFnN00iz9UYNF3"
-);
+  import.meta.env.VITE_STRIPE_PUB_KEY);
 
 function MergedCheckoutForm({ clientSecret, course }) {
   const stripe = useStripe();
@@ -45,7 +44,7 @@ function MergedCheckoutForm({ clientSecret, course }) {
     });
 
     if (res.error) {
-      alert(res.error.message || "Payment failed");
+      Swal.fire(res.error.message || "Payment failed");
       setProcessing(false);
       return;
     }
@@ -57,14 +56,14 @@ function MergedCheckoutForm({ clientSecret, course }) {
     ) {
       try {
         await confirmPayment(res.paymentIntent.id);
-        alert("Payment successful! Enrollment created.");
-        navigate("/my-courses");
+        Swal.fire("Payment successful! Enrollment created.");
+        navigate("/Home");
       } catch (err) {
         console.error(err);
-        alert("Payment succeeded but enrollment was not recorded.");
+        Swal.fire("Payment succeeded but enrollment was not recorded.");
       }
     } else {
-      alert("Payment status: " + res.paymentIntent?.status);
+      Swal.fire("Payment status: " + res.paymentIntent?.status);
     }
 
     setProcessing(false);
@@ -110,7 +109,6 @@ export default function BuyCourse() {
     <div className="min-h-screen bg-gray-100 flex justify-center py-10 px-4">
       <div className="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8">
 
-        {/* LEFT — Course Details */}
         <div className="bg-white shadow rounded-xl p-6 h-fit">
           <img
             src={course.thumbnailUrl}
@@ -145,7 +143,6 @@ export default function BuyCourse() {
           </div>
         </div>
 
-        {/* RIGHT — Payment */}
         <div className="bg-white shadow rounded-xl p-6">
           <h2 className="text-xl font-semibold mb-5">Complete Your Payment</h2>
 

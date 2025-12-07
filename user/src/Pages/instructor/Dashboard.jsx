@@ -1,9 +1,8 @@
 import InstructorSidebar from "../../component/InstructorSidebar";
 import InstructorTopbar from "../../component/InstructorTopbar";
-
 import StudentsLast7DaysChart from "../../component/charts/StudentLast7DaysChart";
 import EarningsLast7DaysChart from "../../component/charts/EarningLast7DaysChart";
-import CourseComparisonChart from "../../component/charts/CourseComparisonChart";
+// import CourseComparisonChart from "../../component/charts/CourseComparisonChart";
 
 export default function Dashboard() {
   return (
@@ -50,12 +49,12 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="bg-white p-6 shadow rounded-lg mt-10">
+          {/* <div className="bg-white p-6 shadow rounded-lg mt-10">
             <h2 className="text-lg font-semibold mb-4">
               Course Performance Comparison
             </h2>
             <CourseComparisonChart />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

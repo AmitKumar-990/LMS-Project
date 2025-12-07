@@ -20,3 +20,31 @@ const sendEmail = async(email, subject, message) => {
 };
 
 export default sendEmail;
+
+
+
+
+// import sgMail from "@sendgrid/mail";
+
+// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+// const sendEmail = async(email, subject, message) => {
+//     const msg = {
+//         to: email,
+//         from: process.env.SENDGRID_SENDER,
+//         subject,
+//         html: message,
+//     };
+
+//     try {
+//         await sgMail.send(msg);
+//         console.log("📧 Email sent successfully");
+//     } catch (err) {
+//         console.error(
+//             "SendGrid Error:",
+//             (err.response && err.response.body) ? err.response.body : err.message
+//         );
+//     }
+// };
+
+// export default sendEmail;

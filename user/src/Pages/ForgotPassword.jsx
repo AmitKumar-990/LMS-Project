@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Swal from "sweetalert2";
 import { forgotPassword } from "../api/authAPI";
 // import Navbar from "../component/nav-short";
 
@@ -15,13 +16,12 @@ export default function ForgotPassword() {
       await forgotPassword({ email });
       setSuccess("Reset link sent! Check your email.");
       setEmail("");
-
-      // Optional auto redirect
+      
       setTimeout(() => {
         window.location.href = "/";
       }, 3000);
     } catch (err) {
-      alert(err.response?.data?.message || "Error sending email");
+      Swal.fire(err.response?.data?.message || "Error sending email");
     }
     setLoading(false);
   };
@@ -37,7 +37,6 @@ export default function ForgotPassword() {
           Enter your registered email to receive a reset link.
         </p>
 
-        {/* EMAIL INPUT */}
         <div className="mt-6">
           <input
             type="email"
@@ -48,7 +47,6 @@ export default function ForgotPassword() {
           />
         </div>
 
-        {/* SUBMIT BUTTON */}
         <button
           onClick={handleSubmit}
           disabled={!emailValid || loading}
@@ -61,14 +59,12 @@ export default function ForgotPassword() {
           {loading ? "Sending..." : "Send Reset Link"}
         </button>
 
-        {/* SUCCESS MESSAGE */}
         {success && (
           <p className="text-green-600 text-center mt-4 font-medium animate-pulse">
             {success}
           </p>
         )}
 
-        {/* Back to login */}
         <p className="text-center text-gray-600 mt-5">
           <a href="/" className="text-blue-600 font-medium hover:underline">
             Back to Login

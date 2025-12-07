@@ -30,6 +30,9 @@
 import { useState } from "react";
 import { createCourse } from "../../api/courseAPI";
 import { useNavigate } from "react-router-dom";
+
+import Swal from "sweetalert2";
+
 import InstructorSidebar from "../../component/InstructorSidebar";
 import InstructorTopbar from "../../component/InstructorTopbar";
 import ThumbnailUploader from "../../component/ThumbnailUploader";
@@ -55,16 +58,16 @@ export default function AddCourse() {
 
   const handleCreate = async () => {
     if (!form.title || !form.description || !form.thumbnailUrl) {
-      alert("Title, Description & Thumbnail are required");
+      Swal.fire("Title, Description & Thumbnail are required");
       return;
     }
 
     try {
       await createCourse(form);
-      alert("Course created successfully!");
+      Swal.fire("Course created successfully!");
       navigate("/instructor/my-courses");
     } catch (err) {
-      alert(err.response?.data?.message || "Course creation failed");
+      Swal.fire(err.response?.data?.message || "Course creation failed");
     }
   };
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Swal from "sweetalert2";
 import { updateCourse } from "../../api/courseAPI";
 import ThumbnailUploader from "../ThumbnailUploader";
 
@@ -19,10 +20,10 @@ export default function OverviewTab({ course, refresh }) {
     setSaving(true);
     try {
       await updateCourse(course._id, form);
-      alert("Course updated");
+      Swal.fire("Course updated");
       await refresh();
     } catch (err) {
-      alert(err.response?.data?.message || "Update failed");
+      Swal.fire(err.response?.data?.message || "Update failed");
     }
     setSaving(false);
   };

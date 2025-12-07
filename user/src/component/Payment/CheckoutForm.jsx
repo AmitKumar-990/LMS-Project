@@ -1,5 +1,8 @@
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { useState } from "react";
+
+import Swal from "sweetalert2";
+
 import { confirmPayment } from "../../api/paymentAPI";
 import { useNavigate } from "react-router-dom";
 
@@ -31,14 +34,14 @@ export default function CheckoutForm({ course }) {
     );
 
     if (result.error) {
-      alert(result.error.message);
+      Swal.fire(result.error.message);
       setLoading(false);
       return;
     }
 
     if (result.paymentIntent.status === "succeeded") {
       await confirmPayment(result.paymentIntent.id);
-      alert("Payment Successful!");
+      Swal.fire("Payment Successful!");
       navigate("/my-courses");
     }
 
