@@ -1,5 +1,6 @@
 import cloudinary from "../utils/cloudinary.js";
 import streamifier from "streamifier";
+import fs from "fs";
 import Content from "../models/Content.js";
 import Chapter from "../models/Chapter.js";
 
@@ -41,48 +42,39 @@ export const createContent = async(req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+
 export const uploadVideo = async(req, res) => {
     try {
         if (!req.file)
             return res.status(400).json({ message: "No file provided" });
 
-        const streamUpload = (buffer) =>
-            new Promise((resolve, reject) => {
-                const uploadStream = cloudinary.uploader.upload_stream({
-                        resource_type: "video",
-                        folder: "lms/videos",
-                        chunk_size: 6000000, // 6MB chunks (important!)
-                        eager: [{ width: 600, height: 338, crop: "pad", format: "jpg" }],
-                    },
-                    (error, result) => {
-                        if (error) {
-                            console.error("Cloudinary error:", error);
-                            return reject(error);
-                        }
-                        resolve(result);
-                    }
-                );
-
-                streamifier.createReadStream(buffer).pipe(uploadStream);
-            });
-
-
-        const result = await streamUpload(req.file.buffer);
-
-        const thumbnailUrl =
-            result.eager && result.eager[0] ? result.eager[0].secure_url : "";
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            resource_type: "video",
+            folder: "lms/videos",
+            chunk_size: 6000000,
+            eager: [{
+                width: 600,
+                height: 338,
+                crop: "pad",
+                format: "jpg",
+            }, ],
+        });
 
         res.json({
             url: result.secure_url,
-            thumbnailUrl,
+            thumbnailUrl:
+                (result.eager && result.eager[0] && result.eager[0].secure_url) || "",
             duration: result.duration || 0,
             public_id: result.public_id,
         });
+
     } catch (err) {
-        console.error("uploadVideo err:", err);
-        res.status(500).json({ message: err.message || "Upload failed" });
+        console.error("Cloudinary Upload Error:", err);
+        res.status(500).json({ message: err.message });
     }
 };
+
+
 
 export const uploadPDF = async(req, res) => {
     try {
@@ -169,3 +161,12 @@ export const deleteContent = async(req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+
+
+// res.json({
+//     url: result.secure_url,
+//     thumbnailUrl:
+//         (result.eager && result.eager[0] && result.eager[0].secure_url) || "",
+//     duration: result.duration || 0,
+//     public_id: result.public_id,
+// });

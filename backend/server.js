@@ -4,6 +4,7 @@ dotenv.config();
 
 import cors from "cors";
 import connectDB from "./config/db.js";
+import path from "path";
 
 import authRoutes from "./routes/route.js";
 import googleRoutes from "./routes/googleroute.js";
@@ -15,6 +16,7 @@ import contentRoutes from "./routes/contentRoutes.js";
 import analyticsRoutes from "./routes/analyticsRoutes.js";
 import paymentRoutes from "./routes/paymentRoute.js";
 import enrollmentRoutes from "./routes/enrollmentRoutes.js";
+import { clearScreenDown } from "readline";
 
 connectDB();
 
@@ -25,11 +27,12 @@ app.use(cors({
     credentials: true
 }));
 
-app.use(express.json({ limit: "1000mb" }));
-app.use(express.urlencoded({ limit: "1000mb", extended: true }));
+app.use(express.json({ limit: "1gb" }));
+app.use(express.urlencoded({ limit: "1gb", extended: true }));
 
 app.use(passport.initialize());
-
+app.use("/uploads", express.static("uploads"));
+clearScreenDown
 app.use("/api/auth", authRoutes);
 app.use("/api", googleRoutes);
 app.use("/api/course", courseRoutes);
