@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { uploadThumbnail } from "../api/uploadAPI";
+import { uploadThumbnailFile as uploadThumbnail } from "../api/contentAPI";
 
 export default function ThumbnailUploader({ onUpload }) {
   const [preview, setPreview] = useState(null);
@@ -14,7 +14,7 @@ export default function ThumbnailUploader({ onUpload }) {
     setProgress(10);
 
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file",file);
 
     try {
       let fakeProgress = 10;
@@ -47,7 +47,7 @@ export default function ThumbnailUploader({ onUpload }) {
         onChange={handleThumbnail}
       />
 
-      {/* Progress Bar */}
+      {/* progress bar */}
       {progress > 0 && progress < 100 && (
         <div className="mt-3 w-full">
           <div className="w-full bg-gray-200 h-3 rounded">

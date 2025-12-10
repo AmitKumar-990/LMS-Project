@@ -47,13 +47,14 @@ export const uploadThumbnailFile = (formData, onUploadProgress) =>
         onUploadProgress,
     });
 
-export const uploadPDF = (formData, onUploadProgress) =>
-    API.post("/upload-pdf", formData, {
+export const uploadPDF = (formData) => {
+    return axios.post("http://localhost:5000/api/content/upload-pdf", formData, {
         headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`
         },
-        onUploadProgress,
     });
+};
 
 export const createContent = (data) =>
     API.post("/create", data, authHeader());

@@ -62,7 +62,7 @@ export default function Footer() {
           <h3 className="text-white font-semibold mb-4 text-lg">Support</h3>
           <ul className="space-y-3">
             <li><a href="#" className="hover:text-white">Help Center</a></li>
-            <li><a href="#" className="hover:text-white">Refund Policy</a></li>
+            {/* <li><a href="#" className="hover:text-white">Refund Policy</a></li> */}
             <li><a href="#" className="hover:text-white">Terms & Conditions</a></li>
             <li><a href="#" className="hover:text-white">Privacy Policy</a></li>
           </ul>
@@ -73,7 +73,7 @@ export default function Footer() {
             <li>
               📩 Email:  
               <a href="mailto:getspeeddev@gmail.com" className="text-gray-400 text-sm">
-                getspeeddev@gmail.com
+                get.skillz.help@gmail.com
               </a>
             </li>
             <li>

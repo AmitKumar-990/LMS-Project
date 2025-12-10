@@ -70,10 +70,8 @@ export default function CourseEditor() {
       <div className="md:ml-64 w-full">
         <InstructorTopbar />
 
-        {/* Page Container */}
         <div className="p-4 sm:p-6 md:p-8">
 
-          {/* Course Header Card */}
           <div className="bg-white shadow rounded-xl p-4 sm:p-6 mb-6
                           flex flex-col md:flex-row md:items-center md:justify-between gap-4">
 
@@ -86,7 +84,6 @@ export default function CourseEditor() {
               </p>
             </div>
 
-            {/* Tabs */}
             <div className="flex gap-2 bg-gray-100 p-1 rounded-lg overflow-x-auto">
               {tabs.map((t) => (
                 <button
@@ -104,7 +101,6 @@ export default function CourseEditor() {
             </div>
           </div>
 
-          {/* Content Box */}
           <div className="bg-white shadow-md rounded-xl p-4 sm:p-6">
             {activeTab === "Overview" && (
               <OverviewTab course={course} refresh={fetchCourse} />

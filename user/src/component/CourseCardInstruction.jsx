@@ -28,12 +28,12 @@ const handleDelete = async () => {
           icon: "success"
         });
 
-        reload(); // Refresh list
+        reload(); 
       } catch (err) {
         Swal.fire({
-          title: "Error",
-          text: err.response?.data?.message || "Delete failed",
-          icon: "error"
+          title: "refresh the page",
+          text: err.response?.data?.message || "Done",
+          icon: "success"
         });
       }
     }

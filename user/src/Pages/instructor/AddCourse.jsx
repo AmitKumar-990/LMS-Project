@@ -1,32 +1,3 @@
-// import InstructorSidebar from "../../component/InstructorSidebar";
-// import InstructorTopbar from "../../component/InstructorTopbar";
-
-// export default function AddCourse() {
-//   return (
-//     <div className="flex">
-//       <InstructorSidebar />
-//       <div className="ml-64 w-full">
-//         <InstructorTopbar />
-
-//         <div className="p-8">
-//           <h1 className="text-3xl font-semibold mb-6">Create Course</h1>
-
-//           <div className="bg-white shadow rounded-lg p-6 space-y-5">
-//             <input className="w-full p-3 border rounded" placeholder="Course Title" />
-//             <textarea className="w-full p-3 border rounded" placeholder="Course Description"></textarea>
-//             <input className="w-full p-3 border rounded" placeholder="Category" />
-//             <input className="w-full p-3 border rounded" placeholder="Price" type="number" />
-//             <input className="w-full p-3 border rounded" type="file" />
-
-//             <button className="px-6 py-3 bg-blue-600 text-white rounded">Create Course</button>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-
 import { useState } from "react";
 import { createCourse } from "../../api/courseAPI";
 import { useNavigate } from "react-router-dom";
@@ -82,7 +53,6 @@ export default function AddCourse() {
 
           <div className="bg-white p-6 shadow rounded-lg space-y-5">
 
-            {/* Title */}
             <input
               name="title"
               onChange={handleInput}
@@ -90,7 +60,6 @@ export default function AddCourse() {
               placeholder="Course Title"
             />
 
-            {/* Description */}
             <textarea
               name="description"
               onChange={handleInput}
@@ -98,7 +67,6 @@ export default function AddCourse() {
               placeholder="Course Description"
             ></textarea>
 
-            {/* Category */}
             <input
               name="category"
               onChange={handleInput}
@@ -106,7 +74,6 @@ export default function AddCourse() {
               placeholder="Category"
             />
 
-            {/* Price */}
             <input
               name="price"
               type="number"
@@ -115,10 +82,8 @@ export default function AddCourse() {
               placeholder="Price"
             />
 
-            {/* Thumbnail Upload */}
             <ThumbnailUploader onUpload={handleThumbnailUploaded} />
 
-            {/* Create Button */}
             <button
               onClick={handleCreate}
               className="px-6 py-3 bg-blue-600 text-white rounded"

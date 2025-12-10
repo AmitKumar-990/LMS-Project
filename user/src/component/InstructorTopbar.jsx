@@ -17,6 +17,8 @@ export default function InstructorTopbar() {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
 
+      localStorage.clear();
+
       navigate("/login");
     }
   });

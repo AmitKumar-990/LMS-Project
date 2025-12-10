@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+// import { useMemo } from "react";
 import Swal from "sweetalert2";
 import {
   createChapter,
@@ -9,6 +10,7 @@ import { updateCourse } from "../../api/courseAPI";
 import { uploadVideo, uploadPDF } from "/src/api/contentAPI.js";
 
 export default function ChaptersTab({ course, refresh }) {
+  // const pdfTimestamp = useMemo(() => Date.now(), []);
   const [chapters, setChapters] = useState(course.chapters || []);
   const [newTitle, setNewTitle] = useState("");
   const [newDesc, setNewDesc] = useState("");
@@ -19,7 +21,6 @@ export default function ChaptersTab({ course, refresh }) {
 
   useEffect(() => {
     if (!course?.chapters) return;
-
     queueMicrotask(() => setChapters([...course.chapters]));
   }, [course?.chapters]);
 
@@ -181,29 +182,29 @@ export default function ChaptersTab({ course, refresh }) {
   };
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-lg">
-      <div className="bg-gray-50 p-5 rounded-xl border mb-8">
-        <h3 className="text-lg font-semibold mb-3">Add New Chapter</h3>
+    <div>
+      <div className="bg-gray-100 p-6 rounded-xl border mb-8">
+        <h3 className="text-xl font-semibold mb-3">Add New Chapter</h3>
 
         <div className="grid gap-3">
           <input
             placeholder="Chapter title"
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
-            className="p-3 border rounded-lg"
+            className="p-3 border rounded-lg bg-white"
           />
 
           <textarea
             placeholder="Chapter description"
             value={newDesc}
             onChange={(e) => setNewDesc(e.target.value)}
-            className="p-3 border rounded-lg"
+            className="p-3 border rounded-lg bg-white"
             rows={4}
           />
 
           <button
             onClick={handleAdd}
-            className="px-5 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+            className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
           >
             Add Chapter
           </button>
@@ -217,16 +218,17 @@ export default function ChaptersTab({ course, refresh }) {
           return (
             <div
               key={ch._id}
-              className="border p-5 rounded-xl bg-gray-50 shadow-sm"
+              className="bg-gray-100 p-6 rounded-xl border mb-8"
             >
-              <div className="flex justify-between gap-4">
+              <div className="flex flex-col md:flex-row justify-between gap-2">
+                {/* LEFT SECTION */}
                 <div className="flex-1">
                   {editingId === ch._id ? (
                     <>
                       <input
                         value={editingTitle}
                         onChange={(e) => setEditingTitle(e.target.value)}
-                        className="p-2 border rounded w-full mb-2"
+                        className="p-2 border rounded w-full mb-3"
                       />
                       <textarea
                         value={editingDesc}
@@ -237,54 +239,45 @@ export default function ChaptersTab({ course, refresh }) {
                     </>
                   ) : (
                     <>
-                      <h3 className="font-semibold text-lg">{ch.title}</h3>
-                      <p className="text-gray-700 mt-1 whitespace-pre-line">
-                        {ch.description}
-                      </p>
+                      <h3 className="font-semibold text-xl">{ch.title}</h3>
+                      <p className="text-gray-600 mt-1">{ch.description}</p>
 
-                      <div className="mt-3 flex gap-4">
+                      {/* Thumbnail + PDF Button */}
+                      <div className="mt-3 flex items-center gap-5 flex-wrap">
                         {ch.thumbnailUrl && (
                           <img
                             src={ch.thumbnailUrl}
-                            className="w-32 h-20 object-cover rounded"
+                            className="w-32 h-20 rounded-lg object-cover shadow"
                           />
                         )}
 
-                        {ch.videoUrl && (
+                        {ch.pdfUrl && (
                           <a
-                            href={ch.videoUrl}
+                            href={`${ch.pdfUrl}`}
                             target="_blank"
-                            className="text-blue-600 underline"
+                            rel="noreferrer"
+                            className="inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition"
                           >
-                            Preview Video
+                            View PDF
                           </a>
                         )}
                       </div>
-
-                      {ch.pdfUrl && (
-                        <a
-                          href={ch.pdfUrl}
-                          target="_blank"
-                          className="text-indigo-600 underline mt-2 block"
-                        >
-                          View PDF
-                        </a>
-                      )}
                     </>
                   )}
                 </div>
 
-                <div className="flex flex-col items-end gap-2">
+                {/* RIGHT SECTION */}
+                <div className="flex flex-col items-end gap-4 min-w-[220px]">
                   {editingId === ch._id ? (
                     <div className="flex gap-2">
                       <button
-                        className="px-3 py-1 bg-blue-600 text-white rounded"
+                        className="px-4 py-1 bg-green-600 text-white rounded hover:bg-green-700"
                         onClick={saveEdit}
                       >
                         Save
                       </button>
                       <button
-                        className="px-3 py-1 bg-gray-300 rounded"
+                        className="px-4 py-1 bg-gray-300 rounded hover:bg-gray-400"
                         onClick={() => setEditingId(null)}
                       >
                         Cancel
@@ -294,39 +287,45 @@ export default function ChaptersTab({ course, refresh }) {
                     <div className="flex gap-2">
                       <button
                         onClick={() => startEdit(ch)}
-                        className="px-3 py-1 bg-yellow-400 rounded"
+                        className="px-4 py-1 bg-yellow-400 rounded hover:bg-yellow-500"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => handleDelete(ch._id)}
-                        className="px-3 py-1 bg-red-600 text-white rounded"
+                        className="px-4 py-1 bg-red-600 text-white rounded hover:bg-red-700"
                       >
                         Delete
                       </button>
                     </div>
                   )}
 
-                  <div className="mt-3 text-right">
-                    <label className="text-sm text-gray-600">
+                  <div className="w-full text-right">
+                    <label className="text-sm font-medium text-gray-700">
                       Upload Video
                     </label>
-                    <input
-                      type="file"
-                      accept="video/*"
-                      onChange={(e) => {
-                        const f = e.target.files[0];
-                        if (f) handleVideoUpload(ch._id, f);
-                        e.target.value = null;
-                      }}
-                      className="text-sm"
-                    />
+                    <div className="mt-1">
+                      <label className="cursor-pointer inline-block px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
+                        Choose Video
+                        <input
+                          type="file"
+                          accept="video/*"
+                          className="hidden"
+                          onChange={(e) => {
+                            const f = e.target.files[0];
+                            if (f) handleVideoUpload(ch._id, f);
+                            e.target.value = null;
+                          }}
+                        />
+                      </label>
+                    </div>
 
+                    {/* Upload Progress */}
                     {st.uploading && (
-                      <div className="mt-2 w-full">
+                      <div className="mt-2">
                         <div className="h-2 bg-gray-200 rounded">
                           <div
-                            className="h-2 bg-blue-600 rounded"
+                            className="h-2 bg-blue-600 rounded transition-all"
                             style={{ width: `${st.progress}%` }}
                           />
                         </div>
@@ -336,31 +335,35 @@ export default function ChaptersTab({ course, refresh }) {
                       </div>
                     )}
 
-                    <label className="text-sm text-gray-600 mt-3 block">
+                    {/* Upload PDF */}
+                    <label className="text-sm font-medium text-gray-700 mt-4 block">
                       Upload PDF
                     </label>
-                    <input
-                      type="file"
-                      accept="application/pdf"
-                      onChange={(e) => {
-                        const f = e.target.files[0];
-                        if (f) handlePDFUpload(ch._id, f);
-                        e.target.value = null;
-                      }}
-                    />
+                    <label className="cursor-pointer inline-block px-4 py-2 bg-purple-600 text-white rounded-lg shadow hover:bg-purple-700 transition mt-1">
+                      Choose PDF
+                      <input
+                        type="file"
+                        accept="application/pdf"
+                        className="hidden"
+                        onChange={(e) => {
+                          const f = e.target.files[0];
+                          if (f) handlePDFUpload(ch._id, f);
+                          e.target.value = null;
+                        }}
+                      />
+                    </label>
                   </div>
 
-                  {/* Reorder */}
-                  <div className="mt-3 flex gap-2">
+                  <div className="flex gap-2">
                     <button
                       onClick={() => moveChapter(idx, "up")}
-                      className="px-2 py-1 bg-gray-200 rounded"
+                      className="p-2 rounded bg-gray-100 hover:bg-gray-200 shadow"
                     >
                       ↑
                     </button>
                     <button
                       onClick={() => moveChapter(idx, "down")}
-                      className="px-2 py-1 bg-gray-200 rounded"
+                      className="p-2 rounded bg-gray-100 hover:bg-gray-200 shadow"
                     >
                       ↓
                     </button>

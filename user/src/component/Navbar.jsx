@@ -21,6 +21,8 @@ export default function Navbar() {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
 
+        localStorage.clear();
+
         navigate("/login");
       }
     });

@@ -17,7 +17,7 @@ export default function MyCourses() {
           `http://localhost:5000/api/course/instructor/${instructorId}`
         );
 
-        setCourses(res.data.courses); // store fetched courses
+        setCourses(res.data.courses); 
       } catch (err) {
         console.error("Failed to load courses", err);
       }
