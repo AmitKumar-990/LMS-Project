@@ -9,7 +9,7 @@ router.get("/instructor/:instructorId", getCoursesByInstructor);
 
 router.post("/create", authMiddleware, createCourse);
 router.get("/all", getAllCourses);
-router.get('/:id', authMiddleware, getCourseById);
+router.get('/:id', getCourseById);
 router.put("/update/:id", authMiddleware, updateCourse);
 router.delete("/delete/:id", authMiddleware, deleteCourse);
 

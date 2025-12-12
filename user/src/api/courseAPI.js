@@ -13,8 +13,13 @@ API.interceptors.request.use((config) => {
 });
 
 export const createCourse = (data) => API.post("/create", data);
+
 export const getMyCourses = () => API.get("/my-courses");
+
 export const getCourseById = (id) => API.get(`/${id}`);
+
 export const getAllCourses = () => API.get("/all");
+
 export const updateCourse = (id, data) => API.put(`/update/${id}`, data);
+
 export const deleteCourse = (id) => API.delete(`/delete/${id}`);
