@@ -14,7 +14,7 @@ export default function Footer() {
           </div>
 
           <p className="text-gray-400 leading-6">
-            Get-Skillz is your online learning companion.  
+            Get-Skillz is your online learning companion.
             Learn new skills, explore top courses, and grow your career.
           </p>
 
@@ -51,42 +51,42 @@ export default function Footer() {
         <div>
           <h3 className="text-white font-semibold mb-4 text-lg">Company</h3>
           <ul className="space-y-3">
-            <li><a href="#" className="hover:text-white">About Us</a></li>
-            <li><a href="#" className="hover:text-white">Careers</a></li>
-            <li><a href="#" className="hover:text-white">Blog</a></li>
-            <li><a href="#" className="hover:text-white">Reviews</a></li>
+            <li><Link to="/about" className="hover:text-white">About Us</Link></li>
+            <li><Link to="/careers" className="hover:text-white">Careers</Link></li>
+            <li><Link to="/blog" className="hover:text-white">Blog</Link></li>
+            <li><Link to="/reviews" className="hover:text-white">Reviews</Link></li>
+
           </ul>
         </div>
 
         <div>
           <h3 className="text-white font-semibold mb-4 text-lg">Support</h3>
           <ul className="space-y-3">
-            <li><a href="#" className="hover:text-white">Help Center</a></li>
-            {/* <li><a href="#" className="hover:text-white">Refund Policy</a></li> */}
-            <li><a href="#" className="hover:text-white">Terms & Conditions</a></li>
-            <li><a href="#" className="hover:text-white">Privacy Policy</a></li>
+            <li><Link to="/help" className="hover:text-white">Help Center</Link></li>
+            <li><Link to="/terms" className="hover:text-white">Terms & Conditions</Link></li>
+            <li><Link to="/privacy" className="hover:text-white">Privacy Policy</Link></li>
           </ul>
 
           <div className="mt-5">
-          <h3 className="text-white font-semibold mb-2">Contact</h3>
-          <ul className="space-y-2 text-gray-400">
-            <li>
-              📩 Email:  
-              <a href="mailto:getspeeddev@gmail.com" className="text-gray-400 text-sm">
-                get.skillz.help@gmail.com
-              </a>
-            </li>
-            <li>
-              📞 Phone:
-              <a href="tel:+919736213715" className="text-gray-400 text-sm">
-                +91 97362 13715
-              </a>
-            </li>
-            <li>
-              📍 Location: Himachal Pradesh, India
-            </li>
-          </ul>
-        </div>
+            <h3 className="text-white font-semibold mb-2">Contact</h3>
+            <ul className="space-y-2 text-gray-400">
+              <li>
+                📩 Email:
+                <a href="mailto:getspeeddev@gmail.com" className="text-gray-400 text-sm">
+                  get.skillz.help@gmail.com
+                </a>
+              </li>
+              <li>
+                📞 Phone:
+                <a href="tel:+919736213715" className="text-gray-400 text-sm">
+                  +91 97362 13715
+                </a>
+              </li>
+              <li>
+                📍 Location: Himachal Pradesh, India
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 

@@ -46,46 +46,45 @@ export default function MyEnrollments() {
 
           {/* Enrolled Courses */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
-            {courses.map((item, idx) => (
-              <div
-                key={item.id}
-                className="
-        bg-white rounded-xl shadow-md hover:shadow-xl 
-        transition-all p-4 transform hover:-translate-y-1 
-        flex flex-col
-      "
-                style={{ transitionDelay: `${idx * 50}ms` }}
-              >
-                {/* Thumbnail */}
-                <div className="w-full h-44 rounded-lg overflow-hidden">
-                  <img
-                    src={item.course.thumbnailUrl}
-                    alt={item.course.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+            {courses
+              .filter((item) => item.course) // 🚨 skip null courses
+              .map((item, idx) => (
+                <div
+                  key={item._id || idx}
+                  className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all p-4 transform hover:-translate-y-1 flex flex-col"
+                  style={{ transitionDelay: `${idx * 50}ms` }}
+                >
+                  {/* Thumbnail */}
+                  <div className="w-full h-44 rounded-lg overflow-hidden">
+                    <img
+                      src={item.course.thumbnailUrl || "/default-course.png"}
+                      alt={item.course.title || "Course"}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
 
-                {/* Title (clamped to 2 lines, fixed height) */}
-                <h2 className="text-lg font-semibold mt-4 text-gray-800 line-clamp-2 h-14">
-                  {item.course.title}
-                </h2>
+                  {/* Title */}
+                  <h2 className="text-lg font-semibold mt-4 text-gray-800 line-clamp-2 h-14">
+                    {item.course.title}
+                  </h2>
 
-                {/* Button fixed at bottom */}
-                <div className="mt-auto">
-                  <button
-                    onClick={() =>
-                      navigate(`/course/${item.course._id}/content`)
-                    }
-                    className="
+                  {/* Button */}
+                  <div className="mt-auto">
+                    <button
+                      onClick={() =>
+                        navigate(`/course/${item.course._id}/content`)
+                      }
+                      className="
             mt-4 w-full px-4 py-2 bg-blue-600 text-white 
             rounded-lg hover:bg-blue-700 transition
           "
-                  >
-                    Continue Learning
-                  </button>
+                    >
+                      Continue Learning
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+
           </div>
         </div>
       </div>
