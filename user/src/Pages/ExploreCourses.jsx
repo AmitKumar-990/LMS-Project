@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { getAllCourses } from "../api/courseAPI";
 import CourseCardStudent from "../component/CourseCardStudent";
-import Navbar from "../component/Navbar"; 
+import Navbar from "../component/Navbar";
 
 export default function ExploreCourses() {
   const [courses, setCourses] = useState([]);
@@ -28,7 +28,7 @@ export default function ExploreCourses() {
 
         const prices = normalized.map((c) => c.price || 0);
         const min = Math.min(...prices, 0);
-        const max = Math.max(...prices, 1000);
+        const max = Math.max(...prices, 1500);
         setPriceRange([min, max]);
       } catch (err) {
         console.error("Failed to load courses", err);
@@ -57,9 +57,9 @@ export default function ExploreCourses() {
       if (query) {
         const q = query.toLowerCase();
         if (
-          !(`${c.title} ${c.description || ""} ${
-            c.instructor?.name || ""
-          }`.toLowerCase().includes(q))
+          !`${c.title} ${c.description || ""} ${c.instructor?.name || ""}`
+            .toLowerCase()
+            .includes(q)
         )
           return false;
       }
@@ -84,12 +84,14 @@ export default function ExploreCourses() {
 
   return (
     <>
-      <Navbar /> 
-      <div className="min-h-screen bg-gray-50 p-6 md:p-10 mt-20">
-        <div className="max-w-[1200px] mx-auto">
+      <Navbar />
 
-          <div className="bg-white rounded-xl p-4 shadow flex flex-col md:flex-row gap-3 items-center">
-            <div className="flex-1">
+      <div className="min-h-screen bg-blue-50/40 p-6 md:p-10 mt-20">
+        <div className="max-w-[1400px] mx-auto">
+          {/* 🔎 FILTER BAR AREA */}
+          <div className="bg-white rounded-2xl p-5 shadow-lg flex flex-wrap gap-4 items-center justify-between">
+            {/* Search */}
+            <div className="flex-1 min-w-[250px]">
               <input
                 value={query}
                 onChange={(e) => {
@@ -97,11 +99,13 @@ export default function ExploreCourses() {
                   setPage(1);
                 }}
                 placeholder="Search for courses, topics or instructors..."
-                className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
+                className="w-full px-4 py-3 border rounded-xl 
+            focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
               />
             </div>
 
-            <div className="flex gap-2 items-center overflow-auto">
+            {/* Categories */}
+            <div className="flex gap-2 items-center overflow-x-auto py-1">
               {categories.map((cat) => (
                 <button
                   key={cat}
@@ -109,17 +113,19 @@ export default function ExploreCourses() {
                     setCategory(cat);
                     setPage(1);
                   }}
-                  className={`px-3 py-2 rounded-full text-sm ${
-                    category === cat
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                  }`}
+                  className={`px-4 py-2 rounded-full text-sm whitespace-nowrap transition-all
+                ${
+                  category === cat
+                    ? "bg-blue-600 text-white shadow"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
                 >
                   {cat}
                 </button>
               ))}
             </div>
 
+            {/* Difficulty */}
             <div>
               <select
                 value={difficulty}
@@ -127,7 +133,7 @@ export default function ExploreCourses() {
                   setDifficulty(e.target.value);
                   setPage(1);
                 }}
-                className="px-3 py-2 border rounded-lg"
+                className="px-4 py-2 border rounded-xl shadow-sm"
               >
                 {difficulties.map((d) => (
                   <option key={d} value={d}>
@@ -137,6 +143,7 @@ export default function ExploreCourses() {
               </select>
             </div>
 
+            {/* Price Range */}
             <div className="flex items-center gap-3">
               <input
                 type="number"
@@ -144,62 +151,67 @@ export default function ExploreCourses() {
                 onChange={(e) =>
                   setPriceRange([Number(e.target.value || 0), priceRange[1]])
                 }
-                className="w-24 px-2 py-2 border rounded"
+                className="w-24 px-3 py-2 border rounded-xl shadow-sm"
                 min={0}
               />
-              <span className="text-gray-500">to</span>
+              <span className="text-gray-500 font-medium">to</span>
               <input
                 type="number"
                 value={priceRange[1]}
                 onChange={(e) =>
                   setPriceRange([priceRange[0], Number(e.target.value || 0)])
                 }
-                className="w-24 px-2 py-2 border rounded"
+                className="w-24 px-3 py-2 border rounded-xl shadow-sm"
                 min={0}
               />
             </div>
           </div>
 
-          <div className="mt-6 flex items-center justify-between">
-            <p className="text-gray-700">{filtered.length} courses found</p>
-            <div className="text-sm text-gray-500">
+          {/* 💬 RESULTS TEXT */}
+          <div className="mt-8 flex items-center justify-between px-2">
+            <p className="text-gray-700 font-medium">
+              {filtered.length} courses found
+            </p>
+            <p className="text-sm text-gray-500">
               Showing {paginated.length} of {filtered.length}
-            </div>
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+          {/* ⭐ COURSE GRID – 4 PER ROW */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
             {paginated.map((course, idx) => (
               <div
                 key={course._id}
-                className={`transform transition duration-400 ${
+                className={`transform transition duration-500 ${
                   mounted
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-4"
                 }`}
-                style={{ transitionDelay: `${idx * 50}ms` }}
+                style={{ transitionDelay: `${idx * 70}ms` }}
               >
                 <CourseCardStudent course={course} />
               </div>
             ))}
           </div>
 
-          <div className="flex items-center justify-center gap-4 mt-8">
+          {/* 🔄 PAGINATION */}
+          <div className="flex items-center justify-center gap-4 mt-10">
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="px-4 py-2 rounded bg-white border disabled:opacity-50"
+              className="px-4 py-2 rounded-xl bg-white border shadow disabled:opacity-40"
             >
               Previous
             </button>
 
-            <div className="px-4 py-2 bg-white border rounded">
+            <div className="px-6 py-2 bg-white border rounded-xl shadow text-gray-700 font-semibold">
               Page {page} of {totalPages}
             </div>
 
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
-              className="px-4 py-2 rounded bg-white border disabled:opacity-50"
+              className="px-4 py-2 rounded-xl bg-white border shadow disabled:opacity-40"
             >
               Next
             </button>

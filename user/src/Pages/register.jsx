@@ -53,7 +53,6 @@ export default function Register() {
 
   return (
     <>
-      {/* ---------------- YOUR UI REMAINS UNCHANGED ---------------- */}
       <style>{`
         @keyframes floaty {
           0% { transform: translateY(0px); }
@@ -106,7 +105,7 @@ export default function Register() {
                 <span className="text-sm font-medium text-gray-700">Full Name</span>
                 <input
                   type="text"
-                  placeholder="John Doe"
+                  placeholder="Enter name shown to Student"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="mt-1 w-full px-4 py-3 bg-gray-50 border rounded-lg 

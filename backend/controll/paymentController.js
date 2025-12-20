@@ -4,6 +4,7 @@ import Payment from "../models/Payment.js";
 import Enrollment from "../models/Enrollment.js";
 // import User from "../models/user.js";
 
+console.log("Stripe Key:", process.env.STRIPE_SECRET_KEY);
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const createPaymentIntent = async(req, res) => {

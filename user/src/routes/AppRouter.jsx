@@ -5,6 +5,15 @@ import Register from "../Pages/register";
 import ForgotPassword from "../Pages/ForgotPassword";
 import ResetPassword from "../Pages/ResetPassword";
 import Home from "../Pages/Home";
+
+import AboutUs from "../Pages/footer/AboutUs";
+import Careers from "../Pages/footer/Careers";
+import Blog from "../Pages/footer/Blog";
+import Reviews from "../Pages/footer/Reviews";
+import HelpCenter from "../Pages/footer/HelpCenter";
+import Terms from "../Pages/footer/Term";
+import Privacy from "../Pages/footer/Privacy";
+
 import ExploreCourses from "../Pages/ExploreCourses";
 
 import InstructorDashboard from "../Pages/instructor/Dashboard";
@@ -14,6 +23,7 @@ import CourseEditor from "../Pages/instructor/CourseEditor";
 import CourseDetails from "../Pages/CourseDetails";
 import BuyCourse from "../Pages/BuyCourses";
 import MyEnrollments from "../Pages/MyEnrollment";
+import CoursePlayer from "../Pages/CoursePlayer";
 import GoogleSuccess from "../Pages/googlesuccess";
 
 import ProtectedRoute from "./ProtectedRoute";
@@ -28,10 +38,20 @@ export default function AppRouter() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} />
       <Route path="/google-success" element={<GoogleSuccess />} />
-      
+
       <Route path="/course/:id" element={<CourseDetails />} />
+      <Route path="/course/:id/content" element={<CoursePlayer />} />
       <Route path="/buy/:courseId" element={<BuyCourse />} />
       <Route path="/my-courses" element={<MyEnrollments />} />
+
+      <Route path="/about" element={<AboutUs />} />
+      <Route path="/careers" element={<Careers />} />
+      <Route path="/blog" element={<Blog />} />
+      <Route path="/reviews" element={<Reviews />} />
+      <Route path="/help" element={<HelpCenter />} />
+      <Route path="/terms" element={<Terms />} />
+      <Route path="/privacy" element={<Privacy />} />
+
 
       <Route
         path="/"

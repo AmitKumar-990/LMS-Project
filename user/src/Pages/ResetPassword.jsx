@@ -62,68 +62,86 @@ export default function ResetPassword() {
     confPassword === password;
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100 px-4">
-      <div className="bg-white shadow-lg p-8 rounded-xl w-full max-w-md">
-        <h2 className="text-3xl font-bold text-center text-gray-800">
-          Reset Password
-        </h2>
+  <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-50 px-4">
+    <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
 
-        <div className="mt-6">
-          <div className="relative">
-            <input
-              type={showPass ? "text" : "password"}
-              placeholder="New Password"
-              className="w-full px-4 py-3 border rounded-lg"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <span
-              className="absolute right-3 top-4 cursor-pointer text-gray-500"
-              onClick={() => setShowPass(!showPass)}
-            >
-              {showPass ? "🙈" : "👁️"}
-            </span>
-          </div>
+      <div className="flex justify-center mb-4">
+        <img
+          src="/logo.png" 
+          alt="Get-Skillz Logo"
+          className="h-12"
+        />
+      </div>
 
-          <PasswordStrengthBar strength={strength} />
+      {/* Heading */}
+      <h2 className="text-3xl font-bold text-center text-gray-800">
+        Reset your password
+      </h2>
+      <p className="text-center text-gray-500 mt-1">
+        Create a strong new password
+      </p>
 
-          <ValidationList validations={validations} />
+      <div className="mt-6 space-y-5">
 
-          <div className="relative mt-6">
-            <input
-              type={showConfPass ? "text" : "password"}
-              placeholder="Confirm Password"
-              value={confPassword}
-              onChange={(e) => setConfPassword(e.target.value)}
-              className="w-full px-4 py-3 border rounded-lg"
-            />
-            <span
-              className="absolute right-3 top-4 cursor-pointer text-gray-500"
-              onClick={() => setShowConfPass(!showConfPass)}
-            >
-              {showConfPass ? "🙈" : "👁️"}
-            </span>
-          </div>
-
-          <button
-            onClick={handleSubmit}
-            disabled={!isValid || loading}
-            className={`w-full mt-6 py-3 rounded-lg text-white font-semibold ${
-              isValid
-                ? "bg-blue-600 hover:bg-blue-700"
-                : "bg-gray-400 cursor-not-allowed"
-            }`}
+        <div className="relative">
+          <input
+            type={showPass ? "text" : "password"}
+            placeholder="New password"
+            className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <span
+            className="absolute right-5 top-4 cursor-pointer text-gray-500"
+            onClick={() => setShowPass(!showPass)}
           >
-            {loading ? "Updating..." : "Update Password"}
-          </button>
-
-          {successMsg && (
-            <p className="text-green-600 text-center mt-4 font-medium">
-              {successMsg}
-            </p>
-          )}
+            {showPass ? "🙈" : "👁️"}
+          </span>
         </div>
+
+        <PasswordStrengthBar strength={strength} />
+        <ValidationList validations={validations} />
+
+        <div className="relative">
+          <input
+            type={showConfPass ? "text" : "password"}
+            placeholder="Confirm password"
+            value={confPassword}
+            onChange={(e) => setConfPassword(e.target.value)}
+            className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          />
+          <span
+            className="absolute right-5 top-4 cursor-pointer text-gray-500"
+            onClick={() => setShowConfPass(!showConfPass)}
+          >
+            {showConfPass ? "🙈" : "👁️"}
+          </span>
+        </div>
+
+        <button
+          onClick={handleSubmit}
+          disabled={!isValid || loading}
+          className={`w-full py-3 rounded-xl text-white font-semibold transition ${
+            isValid
+              ? "bg-blue-600 hover:bg-blue-700"
+              : "bg-gray-400 cursor-not-allowed"
+          }`}
+        >
+          {loading ? "Updating..." : "Update Password"}
+        </button>
+
+        {successMsg && (
+          <p className="text-green-600 text-center font-medium">
+            {successMsg}
+          </p>
+        )}
+
+        <p className="text-center text-sm text-gray-400 mt-2">
+          You’ll be redirected to login automatically
+        </p>
       </div>
     </div>
-  );
+  </div>
+);
+
 }
