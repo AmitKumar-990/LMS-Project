@@ -24,6 +24,9 @@ import CourseDetails from "../Pages/CourseDetails";
 import BuyCourse from "../Pages/BuyCourses";
 import MyEnrollments from "../Pages/MyEnrollment";
 import CoursePlayer from "../Pages/CoursePlayer";
+
+import TestPage from "../Pages/TestPage";
+
 import GoogleSuccess from "../Pages/googlesuccess";
 
 import ProtectedRoute from "./ProtectedRoute";
@@ -41,6 +44,9 @@ export default function AppRouter() {
 
       <Route path="/course/:id" element={<CourseDetails />} />
       <Route path="/course/:id/content" element={<CoursePlayer />} />
+
+      <Route path="/course/:id/start-test" element={<TestPage />} />
+      
       <Route path="/buy/:courseId" element={<BuyCourse />} />
       <Route path="/my-courses" element={<MyEnrollments />} />
 

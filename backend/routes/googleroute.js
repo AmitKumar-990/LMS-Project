@@ -12,16 +12,19 @@ router.get(
 );
 
 router.get(
-    "/google/callback",
-    passport.authenticate("google", { session: false, failureRedirect: "/" }),
-    (req, res) => {
-        const token = jwt.sign({ id: req.user._id, email: req.user.email, role: req.user.role },
-            process.env.JWT_SECRET, { expiresIn: "7d" }
-        );
+  "/google/callback",
+  passport.authenticate("google", { session: false }),
+  (req, res) => {
+    const token = jwt.sign(
+      { id: req.user._id, email: req.user.email, role: req.user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
 
-        // Redirect back to frontend with token
-        res.redirect(`${process.env.CLIENT_URL}/google-success?token=${token}`);
-    }
+    res.redirect(
+      `${process.env.CLIENT_URL}/google-success?token=${token}`
+    );
+  }
 );
 
 export default router;

@@ -8,10 +8,19 @@ export default function GoogleSuccess() {
     const params = new URLSearchParams(window.location.search);
     const token = params.get("token");
 
+    if (!token) {
+      console.error("Google login failed: No token");
+      navigate("/login");
+      return;
+    }
+
     localStorage.setItem("token", token);
 
-    navigate("/home");
+    // Small delay to ensure storage is written
+    setTimeout(() => {
+      navigate("/home");
+    }, 300);
   }, [navigate]);
 
-  return <p>Logging you in...</p>;
+  return <p>Logging you in with Google...</p>;
 }

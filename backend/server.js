@@ -15,6 +15,7 @@ import chapterRoutes from "./routes/chapterRoutes.js";
 import contentRoutes from "./routes/contentRoutes.js";
 import analyticsRoutes from "./routes/analyticsRoutes.js";
 import paymentRoutes from "./routes/paymentRoute.js";
+import testRoutes from "./routes/testRoutes.js";
 import enrollmentRoutes from "./routes/enrollmentRoutes.js";
 import { clearScreenDown } from "readline";
 
@@ -38,6 +39,7 @@ app.use("/api", googleRoutes);
 app.use("/api/course", courseRoutes);
 app.use("/api/chapter", chapterRoutes);
 app.use("/api/content", contentRoutes);
+app.use("/api/test", testRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/enrollments", enrollmentRoutes);

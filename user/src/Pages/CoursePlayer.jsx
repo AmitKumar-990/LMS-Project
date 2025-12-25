@@ -58,19 +58,26 @@ export default function CoursePlayer() {
   }
   const chapters = course.chapters || [];
 
+  // const handleMarkCompleted = async () => {
+  //   const completedCount = chapterIndex + 1;
+  //   const total = chapters.length;
+
+  //   const newProgress = Math.round((completedCount / total) * 100);
+  //   setProgress(newProgress);
+
+  //   try {
+  //     await updateUserProgress(id, { progress: newProgress });
+  //   } catch (err) {
+  //     console.error("Unable to update progress", err);
+  //   }
+  // };
+
   const handleMarkCompleted = async () => {
-    const completedCount = chapterIndex + 1;
-    const total = chapters.length;
+  const newProgress = 100;
+  setProgress(newProgress);
+  await updateUserProgress(id, { progress: newProgress });
+};
 
-    const newProgress = Math.round((completedCount / total) * 100);
-    setProgress(newProgress);
-
-    try {
-      await updateUserProgress(id, { progress: newProgress });
-    } catch (err) {
-      console.error("Unable to update progress", err);
-    }
-  };
 
   return (
     <>
