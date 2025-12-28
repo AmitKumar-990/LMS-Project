@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { getAllCourses } from "../api/courseAPI";
 import CourseCardStudent from "../component/CourseCardStudent";
-import Navbar from "../component/Navbar";
+import Navbar from "../component/home/Navbar";
 
 export default function ExploreCourses() {
   const [courses, setCourses] = useState([]);

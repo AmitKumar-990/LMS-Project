@@ -5,7 +5,7 @@ import { userIsEnrolled } from "../api/enrollmentAPI";
 import { toggleWishlist } from "../api/wishlistAPI";
 import { getCourseReviews } from "../api/reviewAPI";
 import ReviewStars from "../component/ReviewStars";
-import Navbar from "../component/Navbar";
+import Navbar from "../component/home/Navbar";
 
 export default function CourseDetails() {
   const { id } = useParams();

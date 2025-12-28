@@ -22,6 +22,7 @@ import AddCourse from "../Pages/instructor/AddCourse";
 import CourseEditor from "../Pages/instructor/CourseEditor";
 import CourseDetails from "../Pages/CourseDetails";
 import BuyCourse from "../Pages/BuyCourses";
+import PaymentSuccess from "../Pages/PaymentSuccess";
 import MyEnrollments from "../Pages/MyEnrollment";
 import CoursePlayer from "../Pages/CoursePlayer";
 import GoogleSuccess from "../Pages/googlesuccess";
@@ -42,6 +43,8 @@ export default function AppRouter() {
       <Route path="/course/:id" element={<CourseDetails />} />
       <Route path="/course/:id/content" element={<CoursePlayer />} />
       <Route path="/buy/:courseId" element={<BuyCourse />} />
+      
+      <Route path="/payment-success" element={<PaymentSuccess />} />
       <Route path="/my-courses" element={<MyEnrollments />} />
 
       <Route path="/about" element={<AboutUs />} />

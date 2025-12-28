@@ -76,5 +76,5 @@ export default function CheckoutForm({ course }) {
         {loading ? "Processing..." : `Pay ₹${course.price}`}
       </button>
     </form>
-  );
+  )
 }

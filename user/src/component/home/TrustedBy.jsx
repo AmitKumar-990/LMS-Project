@@ -12,7 +12,7 @@ export default function TrustedBy() {
         <div className="flex flex-wrap items-center justify-center gap-10 opacity-100">
           <img src="/src/assets/logos/CU.png" alt="Chandigarh University" className="h-20" />
           <img src="/src/assets/logos/Duke.png" alt="Duke" className="h-20" />
-          <img src="/src/assets/logos/Antier.jpg" alt="Antier Solution" className="h-20" />
+          <img src="/src/assets/logos/antier.png" alt="Antier Solution" className="h-20" />
           <img src="/src/assets/logos/google.png" alt="Google" className="h-10" />
           <img src="/src/assets/logos/microsoft.jpg" alt="Microsoft" className="h-20" />
           <img src="/src/assets/logos/IBM.png" alt="IBM" className="h-20" />

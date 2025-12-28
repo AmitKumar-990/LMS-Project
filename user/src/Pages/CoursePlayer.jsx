@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import Navbar from "../component/Navbar";
+import Navbar from "../component/home/Navbar";
 import { getCourseById } from "../api/courseAPI";
 import { updateUserProgress, getUserProgress } from "../api/progressAPI";
 

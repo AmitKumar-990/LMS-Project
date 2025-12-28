@@ -1,10 +1,14 @@
-import Navbar from "../component/Navbar";
-import HeroSection from "../component/HeroSection";
-import Features from "../component/Features";
-import TrustedBy from "../component/TrustedBy";
-import CourseSlider from "../component/CourseSlider";
-import InvestCareer from "../component/career";
-import Footer from "../component/Footer"
+import Navbar from "../component/home/Navbar";
+import HeroSection from "../component/home/HeroSection";
+import Features from "../component/home/Features";
+import TrustedBy from "../component/home/TrustedBy";
+import CourseSlider from "../component/home/CourseSlider";
+import InvestCareer from "../component/home/career";
+import HowItWorks from "../component/home/working";
+import Categories from "../component/home/Categories";
+import Testimonials from "../component/home/Reviews.jsx";
+import BecomeInstructor from "../component/home/BecomeInstructor.jsx";
+import Footer from "../component/home/Footer"
 
 export default function Home() {
   return (
@@ -15,6 +19,10 @@ export default function Home() {
       <TrustedBy />
       <CourseSlider />
       <InvestCareer />
+      <HowItWorks />
+      <Categories />
+      <Testimonials />
+      <BecomeInstructor />
       <Footer />
     </>
   );

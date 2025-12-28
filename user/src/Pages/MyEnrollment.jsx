@@ -1,18 +1,41 @@
 import { useEffect, useState } from "react";
 import { getMyEnrollments } from "../api/enrollmentAPI";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../component/Navbar";
+import Navbar from "../component/home/Navbar";
 
 export default function MyEnrollments() {
   const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    (async () => {
-      const { data } = await getMyEnrollments();
-      setCourses(data);
-    })();
-  }, []);
+  const handleEnrollment = async () => {
+    const courseId = localStorage.getItem("purchasedCourse");
+
+    //CREATE ENROLLMENT (only once)
+    if (courseId) {
+      try {
+        await fetch("http://localhost:5000/api/enrollments/confirm", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({ courseId }),
+        });
+
+        localStorage.removeItem("purchasedCourse");
+      } catch (err) {
+        console.error("Enrollment failed");
+      }
+    }
+
+    //FETCH ENROLLMENTS
+    const { data } = await getMyEnrollments();
+    setCourses(data);
+  };
+
+  handleEnrollment();
+}, []);
 
   return (
     <>

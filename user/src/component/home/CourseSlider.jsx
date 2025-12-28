@@ -5,8 +5,8 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 
-import CourseCardStudent from "./CourseCardStudent";
-import { getAllCourses } from "../api/courseAPI";
+import CourseCardStudent from "../CourseCardStudent";
+import { getAllCourses } from "../../api/courseAPI";
 
 export default function CourseSlider() {
   const [courses, setCourses] = useState([]);
@@ -27,7 +27,7 @@ export default function CourseSlider() {
   return (
     <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-6">
-        
+
         {/* Heading */}
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900">

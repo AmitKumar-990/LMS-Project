@@ -1,5 +1,6 @@
 import express from "express";
 import { authMiddleware } from "../middleware/auth.js";
+import { confirmEnrollment } from "../controll/enrollmentController.js";
 import Enrollment from "../models/Enrollment.js";
 
 const router = express.Router();
@@ -14,6 +15,8 @@ router.get("/check/:courseId", authMiddleware, async (req, res) => {
   res.json({ enrolled: !!exists });
 });
 
+router.post("/confirm", authMiddleware, confirmEnrollment);
+
 router.get("/my", authMiddleware, async(req, res) => {
     const studentId = req.user.id;
 
@@ -25,20 +28,5 @@ router.get("/my", authMiddleware, async(req, res) => {
         course: e.courseId
     })));
 });
-
-// // Get logged-in user's enrollments
-// router.get("/my", authMiddleware, async (req, res) => {
-//   try {
-//     const enrollments = await Enrollment.find({ studentId: req.user.id })
-//       .populate("course");
-
-//     // 🔥 Prevent null course crash
-//     const validEnrollments = enrollments.filter(e => e.course);
-
-//     res.json(validEnrollments);
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// });
 
 export default router;
