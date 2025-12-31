@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Navbar from "../../component/home/Navbar";
+import Footer from "../../component/home/Footer";
 
 const jobs = [
   {
@@ -155,6 +156,7 @@ export default function Careers() {
       </section>
 
     </div>
+    {/* <Footer />     */}
     </>
   );
 }

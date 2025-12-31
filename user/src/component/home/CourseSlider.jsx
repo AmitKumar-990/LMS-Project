@@ -38,21 +38,28 @@ export default function CourseSlider() {
         {/* Slider */}
         <Swiper
           modules={[Navigation, Autoplay]}
-          spaceBetween={24}
+          spaceBetween={10}
           slidesPerView={1}
           navigation
+          grabCursor={true}
+          speed={500} // smooth transition speed
           autoplay={{
-            delay: 3000,
+            delay: 2000, // slide speed
             disableOnInteraction: false,
+            pauseOnMouseEnter: true, // feels premium
           }}
           breakpoints={{
             640: { slidesPerView: 2 },
             1024: { slidesPerView: 3 },
             1280: { slidesPerView: 4 },
           }}
+          className="course-swiper"
         >
           {courses.map((course) => (
-            <SwiperSlide key={course._id}>
+            <SwiperSlide
+              key={course._id}
+              className="transition-transform duration-300 hover:scale-[1.03]"
+            >
               <CourseCardStudent course={course} />
             </SwiperSlide>
           ))}

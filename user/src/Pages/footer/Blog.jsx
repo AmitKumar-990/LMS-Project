@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Navbar from "../../component/home/Navbar";
+import Footer from "../../component/home/Footer";
 
 const categories = [
   "All",
@@ -181,6 +182,7 @@ export default function Blog() {
       </section>
 
     </div>
+    <Footer />
     </>
   );
 }

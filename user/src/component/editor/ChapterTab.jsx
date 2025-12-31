@@ -9,6 +9,7 @@ import {
 import { updateCourse } from "../../api/courseAPI";
 import { uploadVideo, uploadPDF } from "/src/api/contentAPI.js";
 
+
 export default function ChaptersTab({ course, refresh }) {
   // const pdfTimestamp = useMemo(() => Date.now(), []);
   const [chapters, setChapters] = useState(course.chapters || []);
@@ -377,3 +378,258 @@ export default function ChaptersTab({ course, refresh }) {
     </div>
   );
 }
+
+
+
+// export default function ChaptersTab({ course, refresh }) {
+//   const [chapters, setChapters] = useState(course.chapters || []);
+//   const [newTitle, setNewTitle] = useState("");
+//   const [newDesc, setNewDesc] = useState("");
+//   const [editingId, setEditingId] = useState(null);
+//   const [editingTitle, setEditingTitle] = useState("");
+//   const [editingDesc, setEditingDesc] = useState("");
+//   const [uploadState, setUploadState] = useState({});
+
+//   useEffect(() => {
+//     if (course?.chapters) setChapters([...course.chapters]);
+//   }, [course?.chapters]);
+
+//   const setUploading = (id, data) => {
+//     setUploadState((prev) => ({
+//       ...prev,
+//       [id]: { ...(prev[id] || {}), ...data },
+//     }));
+//   };
+
+//   /* ===== ACTIONS ===== */
+
+//   const handleAdd = async () => {
+//     if (!newTitle) return Swal.fire("Enter chapter title");
+
+//     const { data } = await createChapter({
+//       courseId: course._id,
+//       title: newTitle,
+//       description: newDesc,
+//     });
+
+//     const updated = [...chapters, data];
+//     setChapters(updated);
+//     setNewTitle("");
+//     setNewDesc("");
+
+//     await updateCourse(course._id, { chapters: updated.map(c => c._id) });
+//     await refresh();
+//   };
+
+//   const startEdit = (ch) => {
+//     setEditingId(ch._id);
+//     setEditingTitle(ch.title);
+//     setEditingDesc(ch.description || "");
+//   };
+
+//   const saveEdit = async () => {
+//     await updateChapter(editingId, {
+//       title: editingTitle,
+//       description: editingDesc,
+//     });
+
+//     setEditingId(null);
+//     await refresh();
+//   };
+
+//   const handleDelete = async (id) => {
+//     const ok = await Swal.fire({
+//       title: "Delete chapter?",
+//       icon: "warning",
+//       showCancelButton: true,
+//       confirmButtonText: "Delete",
+//     });
+
+//     if (!ok.isConfirmed) return;
+
+//     await deleteChapter(id);
+//     const updated = chapters.filter(c => c._id !== id);
+//     setChapters(updated);
+
+//     await updateCourse(course._id, { chapters: updated.map(c => c._id) });
+//     await refresh();
+//   };
+
+//   /* ===== UI ===== */
+
+//   return (
+//     <div className="space-y-10">
+
+//       {/* ADD CHAPTER */}
+//       <div className="bg-white p-6 rounded-xl shadow">
+//         <h3 className="text-xl font-semibold mb-4">Add New Chapter</h3>
+
+//         <div className="grid gap-3">
+//           <input
+//             value={newTitle}
+//             onChange={(e) => setNewTitle(e.target.value)}
+//             placeholder="Chapter title"
+//             className="p-3 border rounded-lg"
+//           />
+
+//           <textarea
+//             value={newDesc}
+//             onChange={(e) => setNewDesc(e.target.value)}
+//             placeholder="Chapter description"
+//             rows={3}
+//             className="p-3 border rounded-lg"
+//           />
+
+//           <button
+//             onClick={handleAdd}
+//             className="self-start px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+//           >
+//             Add Chapter
+//           </button>
+//         </div>
+//       </div>
+
+//       {/* CHAPTER LIST */}
+//       <div className="space-y-6">
+//         {chapters.map((ch, index) => {
+//           const st = uploadState[ch._id] || {};
+
+//           return (
+//             <div key={ch._id} className="bg-white rounded-xl shadow p-6">
+
+//               {/* HEADER */}
+//               <div className="flex justify-between items-start gap-4">
+//                 <div>
+//                   <p className="text-sm text-gray-500">Chapter {index + 1}</p>
+
+//                   {editingId === ch._id ? (
+//                     <>
+//                       <input
+//                         value={editingTitle}
+//                         onChange={(e) => setEditingTitle(e.target.value)}
+//                         className="mt-1 p-2 border rounded w-full"
+//                       />
+//                       <textarea
+//                         value={editingDesc}
+//                         onChange={(e) => setEditingDesc(e.target.value)}
+//                         rows={2}
+//                         className="mt-2 p-2 border rounded w-full"
+//                       />
+//                     </>
+//                   ) : (
+//                     <>
+//                       <h3 className="text-lg font-semibold mt-1">{ch.title}</h3>
+//                       <p className="text-gray-600 text-sm">{ch.description}</p>
+//                     </>
+//                   )}
+//                 </div>
+
+//                 {/* ACTIONS */}
+//                 <div className="flex gap-2">
+//                   {editingId === ch._id ? (
+//                     <>
+//                       <button onClick={saveEdit} className="px-4 py-1 bg-green-600 text-white rounded">
+//                         Save
+//                       </button>
+//                       <button onClick={() => setEditingId(null)} className="px-4 py-1 bg-gray-300 rounded">
+//                         Cancel
+//                       </button>
+//                     </>
+//                   ) : (
+//                     <>
+//                       <button onClick={() => startEdit(ch)} className="px-4 py-1 bg-yellow-400 rounded">
+//                         Edit
+//                       </button>
+//                       <button onClick={() => handleDelete(ch._id)} className="px-4 py-1 bg-red-600 text-white rounded">
+//                         Delete
+//                       </button>
+//                     </>
+//                   )}
+//                 </div>
+//               </div>
+
+//               {/* CONTENT UPLOAD */}
+//               <div className="mt-6 grid md:grid-cols-2 gap-6">
+
+//                 {/* VIDEO */}
+//                 <div>
+//                   <p className="font-medium text-gray-700 mb-2">Video</p>
+//                   <label className="inline-block px-4 py-2 bg-blue-600 text-white rounded cursor-pointer">
+//                     Upload Video
+//                     <input
+//                       type="file"
+//                       accept="video/*"
+//                       hidden
+//                       onChange={(e) => handleVideoUpload(ch._id, e.target.files[0])}
+//                     />
+//                   </label>
+
+//                   {st.uploading && (
+//                     <div className="mt-2">
+//                       <div className="h-2 bg-gray-200 rounded">
+//                         <div
+//                           className="h-2 bg-blue-600 rounded"
+//                           style={{ width: `${st.progress}%` }}
+//                         />
+//                       </div>
+//                       <p className="text-xs text-gray-500 mt-1">{st.progress}%</p>
+//                     </div>
+//                   )}
+//                 </div>
+
+//                 {/* PDF */}
+//                 <div>
+//                   <p className="font-medium text-gray-700 mb-2">PDF</p>
+//                   <label className="inline-block px-4 py-2 bg-purple-600 text-white rounded cursor-pointer">
+//                     Upload PDF
+//                     <input
+//                       type="file"
+//                       accept="application/pdf"
+//                       hidden
+//                       onChange={(e) => handlePDFUpload(ch._id, e.target.files[0])}
+//                     />
+//                   </label>
+
+//                   {ch.pdfUrl && (
+//                     <a
+//                       href={ch.pdfUrl}
+//                       target="_blank"
+//                       className="block mt-2 text-blue-600 text-sm"
+//                     >
+//                       View PDF →
+//                     </a>
+//                   )}
+//                 </div>
+//               </div>
+
+//               {/* ORDER */}
+//               <div className="mt-6 flex gap-2">
+//                 <button onClick={() => moveChapter(index, "up")} className="px-3 py-1 border rounded">
+//                   ↑ Move Up
+//                 </button>
+//                 <button onClick={() => moveChapter(index, "down")} className="px-3 py-1 border rounded">
+//                   ↓ Move Down
+//                 </button>
+//               </div>
+//             </div>
+//           );
+//         })}
+//       </div>
+//     </div>
+//   );
+// }
+
+// <div className="flex gap-2">
+//                     <button
+//                       onClick={() => moveChapter(idx, "up")}
+//                       className="p-2 rounded bg-gray-100 hover:bg-gray-200 shadow"
+//                     >
+//                       ↑
+//                     </button>
+//                     <button
+//                       onClick={() => moveChapter(idx, "down")}
+//                       className="p-2 rounded bg-gray-100 hover:bg-gray-200 shadow"
+//                     >
+//                       ↓
+//                     </button>
+//                   </div>

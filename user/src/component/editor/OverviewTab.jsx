@@ -11,16 +11,25 @@ export default function OverviewTab({ course, refresh }) {
     price: course.price || 0,
     thumbnailUrl: course.thumbnailUrl || "",
   });
+
   const [saving, setSaving] = useState(false);
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-  const handleThumbnail = (url) => setForm({ ...form, thumbnailUrl: url });
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleThumbnail = (url) =>
+    setForm({ ...form, thumbnailUrl: url });
 
   const handleSave = async () => {
     setSaving(true);
     try {
       await updateCourse(course._id, form);
-      Swal.fire("Course updated");
+      Swal.fire({
+        icon: "success",
+        title: "Course Updated",
+        timer: 1500,
+        showConfirmButton: false,
+      });
       await refresh();
     } catch (err) {
       Swal.fire(err.response?.data?.message || "Update failed");
@@ -29,32 +38,109 @@ export default function OverviewTab({ course, refresh }) {
   };
 
   return (
-    <div className="bg-white p-6 rounded shadow">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label className="font-medium">Title</label>
-          <input name="title" value={form.title} onChange={handleChange} className="w-full p-3 border rounded mt-2" />
-          <label className="font-medium mt-4 block">Description</label>
-          <textarea name="description" value={form.description} onChange={handleChange} className="w-full p-3 border rounded mt-2 h-40" />
-        </div>
+    <div className="space-y-8">
 
-        <div>
-          <label className="font-medium">Category</label>
-          <input name="category" value={form.category} onChange={handleChange} className="w-full p-3 border rounded mt-2" />
+      {/* BASIC INFO */}
+      <div className="bg-white p-6 rounded-xl shadow">
+        <h2 className="text-xl font-semibold mb-4">Basic Information</h2>
 
-          <label className="font-medium mt-4 block">Price (INR)</label>
-          <input name="price" type="number" value={form.price} onChange={handleChange} className="w-full p-3 border rounded mt-2" />
+        <div className="grid gap-4">
+          <div>
+            <label className="text-sm font-medium text-gray-600">
+              Course Title
+            </label>
+            <input
+              name="title"
+              value={form.title}
+              onChange={handleChange}
+              placeholder="Enter course title"
+              className="mt-1 w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
 
-          <div className="mt-4">
-            <ThumbnailUploader onUpload={handleThumbnail} />
-            {form.thumbnailUrl && <img src={form.thumbnailUrl} alt="thumb" className="w-40 h-28 object-cover mt-3 rounded shadow" />}
+          <div>
+            <label className="text-sm font-medium text-gray-600">
+              Course Description
+            </label>
+            <textarea
+              name="description"
+              value={form.description}
+              onChange={handleChange}
+              rows={5}
+              placeholder="Describe what students will learn"
+              className="mt-1 w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
           </div>
         </div>
       </div>
 
-      <div className="mt-6 flex justify-end">
-        <button onClick={handleSave} disabled={saving} className={`px-6 py-2 rounded text-white ${saving ? 'bg-gray-400' : 'bg-blue-600'}`}>
-          {saving ? 'Saving...' : 'Save Changes'}
+      {/* CATEGORY & PRICE */}
+      <div className="bg-white p-6 rounded-xl shadow">
+        <h2 className="text-xl font-semibold mb-4">Category & Pricing</h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="text-sm font-medium text-gray-600">
+              Category
+            </label>
+            <input
+              name="category"
+              value={form.category}
+              onChange={handleChange}
+              placeholder="e.g. Web Development"
+              className="mt-1 w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="text-sm font-medium text-gray-600">
+              Price (INR)
+            </label>
+            <input
+              name="price"
+              type="number"
+              value={form.price}
+              onChange={handleChange}
+              className="mt-1 w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* THUMBNAIL */}
+      <div className="bg-white p-6 rounded-xl shadow">
+        <h2 className="text-xl font-semibold mb-4">Course Thumbnail</h2>
+
+        <div className="flex flex-col md:flex-row gap-6 items-start">
+          <ThumbnailUploader onUpload={handleThumbnail} />
+
+          {form.thumbnailUrl && (
+            <div className="border rounded-xl overflow-hidden shadow-sm">
+              <img
+                src={form.thumbnailUrl}
+                alt="Thumbnail"
+                className="w-56 h-36 object-cover"
+              />
+              <p className="text-xs text-center text-gray-500 py-2">
+                Current Thumbnail
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* SAVE BUTTON */}
+      <div className="flex justify-end">
+        <button
+          onClick={handleSave}
+          disabled={saving}
+          className={`px-8 py-3 rounded-lg text-white font-medium transition ${
+            saving
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700"
+          }`}
+        >
+          {saving ? "Saving..." : "Save Changes"}
         </button>
       </div>
     </div>

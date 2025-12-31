@@ -123,6 +123,7 @@ export default function About() {
       </section>
 
     </div>
+    <Footer />
     </>
   );
 }
